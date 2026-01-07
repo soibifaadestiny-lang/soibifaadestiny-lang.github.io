@@ -3,22 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultimate Internet | Digital Services & Data</title>
+    <title>ULTIMATE INTERNET | Trust & Growth</title>
     <style>
-        :root { --primary: #00d2ff; --secondary: #3a7bd5; --dark: #0f172a; --accent: #ff9900; }
-        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; background-color: #0b0f19; color: white; line-height: 1.6; }
+        :root { --primary: #00d2ff; --secondary: #3a7bd5; --dark: #0f172a; --accent: #ff9900; --success: #25d366; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #0b0f19; color: white; line-height: 1.6; }
         header { background: rgba(15, 23, 42, 0.95); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--primary); position: sticky; top: 0; z-index: 1000; }
-        .hero { padding: 100px 20px; text-align: center; background: linear-gradient(rgba(11, 15, 25, 0.8), rgba(11, 15, 25, 0.8)), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200'); background-size: cover; }
-        .hero h1 { font-size: 3.5rem; color: var(--primary); margin-bottom: 10px; text-transform: uppercase; }
-        .hero p { font-size: 1.2rem; color: #94a3b8; max-width: 800px; margin: 0 auto 30px; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 50px 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
-        .card { background: #1e293b; border-radius: 15px; padding: 25px; transition: 0.3s; border: 1px solid #334155; text-align: center; }
-        .card:hover { transform: translateY(-10px); border-color: var(--primary); box-shadow: 0 10px 20px rgba(0, 210, 255, 0.2); }
-        .card h3 { color: var(--primary); font-size: 1.5rem; margin-top: 0; }
-        .price-tag { font-size: 1.1rem; color: var(--accent); font-weight: bold; margin: 10px 0; display: block; }
-        .btn { background: var(--primary); color: #0f172a; padding: 12px 30px; text-decoration: none; border-radius: 50px; font-weight: bold; display: inline-block; transition: 0.3s; margin-top: 15px; }
-        .btn:hover { background: white; transform: scale(1.05); }
-        .whatsapp-btn { background: #25d366; color: white; }
+        .hero { padding: 80px 20px; text-align: center; background: linear-gradient(rgba(11, 15, 25, 0.8), rgba(11, 15, 25, 0.8)), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80&w=1200'); background-size: cover; }
+        .hero h1 { font-size: 3rem; color: var(--primary); margin: 0; text-transform: uppercase; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
+        .card { background: #1e293b; border-radius: 15px; padding: 25px; border: 1px solid #334155; text-align: center; }
+        .price-tag { font-size: 1.2rem; color: var(--accent); font-weight: bold; margin: 10px 0; display: block; }
+        .btn { background: var(--primary); color: #0f172a; padding: 12px 30px; text-decoration: none; border-radius: 50px; font-weight: bold; display: inline-block; transition: 0.3s; }
+        .whatsapp-btn { background: var(--success); color: white; margin-top: 10px; }
+
+        .section-title { text-align: center; color: var(--primary); margin-top: 60px; text-transform: uppercase; letter-spacing: 2px; }
+        
+        /* How to Order Styling */
+        .order-guide { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .order-step { background: rgba(255, 255, 255, 0.03); padding: 30px; border-radius: 15px; border: 1px solid #1e293b; text-align: center; position: relative; }
+        .step-num { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: var(--primary); color: #000; width: 35px; height: 35px; border-radius: 50%; line-height: 35px; font-weight: bold; }
+
+        .trust-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto; padding: 20px; }
+        .trust-item { background: rgba(0, 210, 255, 0.05); border: 1px dashed var(--primary); padding: 20px; border-radius: 10px; text-align: center; }
+        
+        .testimonial-container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; padding: 20px; }
+        .testimonial-card { background: #0f172a; border-left: 4px solid var(--primary); padding: 20px; width: 300px; font-style: italic; border-radius: 5px; }
+        .customer-name { display: block; margin-top: 10px; color: var(--primary); font-weight: bold; font-style: normal; }
+
+        .payment-methods { text-align: center; padding: 40px 20px; background: #1e293b; margin-top: 50px; }
+        .pay-badge { display: inline-block; background: #0b0f19; padding: 10px 20px; margin: 5px; border-radius: 5px; border: 1px solid #334155; }
+
         footer { text-align: center; padding: 50px; background: #070a13; color: #64748b; border-top: 1px solid #334155; }
     </style>
 </head>
@@ -26,51 +40,103 @@
 
 <header>
     <div style="font-size: 1.5rem; font-weight: bold; color: var(--primary);">ULTIMATE INTERNET</div>
-    <a href="https://wa.me/2349025893450" class="btn" style="margin:0; padding: 8px 15px;">Contact Support</a>
+    <a href="https://wa.me/2349025893450" class="btn" style="padding: 8px 15px;">Chat Admin</a>
 </header>
 
 <section class="hero">
-    <h1>Digital Growth & Connectivity</h1>
-    <p>Premium Social Media Services, Verified Global Numbers, and Instant Data Top-ups.</p>
-    <a href="#services" class="btn">Explore Services</a>
+    <h1>ULTIMATE INTERNET</h1>
+    <p>The Most Affordable Plug for Digital Growth & Data.</p>
 </section>
 
 <div class="container" id="services">
     <div class="card">
-        <h3>Social Media Growth</h3>
-        <p>Real TikTok & FB followers/likes to boost your online presence.</p>
-        <span class="price-tag">Starting from ₦1,000</span>
-        <a href="https://wa.me/2349025893450?text=Hello+Ultimate+Internet,+I+want+to+buy+Social+Media+Followers" class="btn whatsapp-btn">Order on WhatsApp</a>
+        <h3>TikTok Growth</h3>
+        <span class="price-tag">₦2,500 / 1k</span>
+        <a href="https://wa.me/2349025893450?text=I+want+to+buy+TikTok+Followers" class="btn whatsapp-btn">Order Now</a>
     </div>
-
     <div class="card">
         <h3>USA Numbers</h3>
-        <p>Permanent numbers for WhatsApp, Telegram, and business bypass.</p>
-        <span class="price-tag">Verified & Reliable</span>
-        <a href="https://wa.me/2349025893450?text=Hello+Ultimate+Internet,+I+need+a+USA+Verified+Number" class="btn whatsapp-btn">Get Number</a>
+        <span class="price-tag">₦7,000</span>
+        <a href="https://wa.me/2349025893450?text=I+need+a+USA+Number" class="btn whatsapp-btn">Get Number</a>
     </div>
-
     <div class="card">
-        <h3>Cheap Data Bundles</h3>
-        <p>Affordable data for MTN, Airtel, Glo, and 9mobile. Instant delivery.</p>
-        <span class="price-tag">1GB as low as ₦250</span>
-        <a href="https://wa.me/2349025893450?text=Hello+Ultimate+Internet,+I+want+to+buy+Data+Bundles" class="btn whatsapp-btn">Buy Data Now</a>
+        <h3>MTN/Airtel Data</h3>
+        <span class="price-tag">₦500 / GB</span>
+        <a href="https://wa.me/2349025893450?text=I+want+to+buy+Data" class="btn whatsapp-btn">Buy Data</a>
     </div>
-
     <div class="card">
-        <h3>Premium Accounts</h3>
-        <p>Buy aged Facebook, Instagram, and TikTok accounts with high reach.</p>
-        <span class="price-tag">Aged & Secure</span>
-        <a href="https://wa.me/2349025893450?text=Hello+Ultimate+Internet,+I+want+to+buy+a+Social+Media+Account" class="btn whatsapp-btn">View Inventory</a>
+        <h3>Aged FB Accounts</h3>
+        <span class="price-tag">₦3,000</span>
+        <a href="https://wa.me/2349025893450?text=I+want+to+buy+Aged+FB+Account" class="btn whatsapp-btn">View Stock</a>
     </div>
 </div>
 
+<h2 class="section-title">How to Order</h2>
+<div class="order-guide">
+    <div class="order-step">
+        <div class="step-num">1</div>
+        <h3>Select Service</h3>
+        <p>Click the "Order Now" button for the service you need.</p>
+    </div>
+    <div class="order-step">
+        <div class="step-num">2</div>
+        <h3>Make Payment</h3>
+        <p>Chat admin to get payment details (OPay, PalmPay, etc.)</p>
+    </div>
+    <div class="order-step">
+        <div class="step-num">3</div>
+        <h3>Get Delivery</h3>
+        <p>Send your payment receipt and receive your order in minutes!</p>
+    </div>
+</div>
+
+<h2 class="section-title">Why Trust Us?</h2>
+<div class="trust-grid">
+    <div class="trust-item">
+        <h3>✅ 100% Safe</h3>
+        <p>No password needed for social media services.</p>
+    </div>
+    <div class="trust-item">
+        <h3>⚡ Fast Delivery</h3>
+        <p>Orders processed within 5-30 minutes.</p>
+    </div>
+    <div class="trust-item">
+        <h3>💰 Refund Policy</h3>
+        <p>Full refund guaranteed if order fails.</p>
+    </div>
+</div>
+
+<h2 class="section-title">Customer Reviews</h2>
+<div class="testimonial-container">
+    <div class="testimonial-card">
+        "Ultimate Internet is the best! My TikTok followers arrived in 10 mins. Very reliable."
+        <span class="customer-name">- Segun A.</span>
+    </div>
+    <div class="testimonial-card">
+        "The USA number worked perfectly for my WhatsApp business. I highly recommend them."
+        <span class="customer-name">- Blessing O.</span>
+    </div>
+    <div class="testimonial-card">
+        "Cheapest data I've found so far. The delivery is instant!"
+        <span class="customer-name">- David J.</span>
+    </div>
+</div>
+
+<div class="payment-methods">
+    <h3>Accepted Payment Methods</h3>
+    <div class="payment-icons">
+        <div class="pay-badge">OPay</div>
+        <div class="pay-badge">PalmPay</div>
+        <div class="pay-badge">Bank Transfer</div>
+        <div class="pay-badge">Kuda</div>
+    </div>
+    <p style="font-size: 0.9rem; margin-top: 15px;">Send a screenshot of payment to WhatsApp for instant activation.</p>
+</div>
+
 <footer>
-    <p>&copy; 2026 ULTIMATE INTERNET. Fast. Secure. Reliable.</p>
-    <p>Admin Contact: 09025893450</p>
+    <p>&copy; 2026 ULTIMATE INTERNET. Admin: 08107390666</p>
 </footer>
 
 </body>
     </html>
-
-
+    
