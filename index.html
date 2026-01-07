@@ -8,40 +8,28 @@
         :root { --primary: #00d2ff; --secondary: #3a7bd5; --dark: #0f172a; --accent: #ff9900; --success: #25d366; }
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #0b0f19; color: white; line-height: 1.6; overflow-x: hidden; }
         
-        /* WELCOME OVERLAY STYLES */
-        #welcome-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(11, 15, 25, 0.98);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 9999; transition: 0.5s;
-        }
-        .welcome-box {
-            text-align: center; padding: 40px; border: 2px solid var(--primary);
-            border-radius: 20px; background: #0f172a; box-shadow: 0 0 30px rgba(0, 210, 255, 0.3);
-            max-width: 80%;
-        }
-        .welcome-box h2 { color: var(--primary); text-transform: uppercase; margin-bottom: 10px; }
-        .welcome-box p { color: #94a3b8; margin-bottom: 25px; }
+        /* WELCOME OVERLAY */
+        #welcome-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 15, 25, 0.98); display: flex; justify-content: center; align-items: center; z-index: 9999; transition: 0.5s; }
+        .welcome-box { text-align: center; padding: 40px; border: 2px solid var(--primary); border-radius: 20px; background: #0f172a; box-shadow: 0 0 30px rgba(0, 210, 255, 0.3); max-width: 80%; }
 
-        /* HEADER & HERO */
         header { background: rgba(15, 23, 42, 0.95); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--primary); position: sticky; top: 0; z-index: 1000; }
-        .hero { padding: 80px 20px; text-align: center; background: linear-gradient(rgba(11, 15, 25, 0.85), rgba(11, 15, 25, 0.85)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000'); background-size: cover; background-position: center; }
-        .hero h1 { font-size: 3rem; color: var(--primary); text-transform: uppercase; text-shadow: 0 0 15px rgba(0, 210, 255, 0.5); }
+        .hero { padding: 60px 20px; text-align: center; background: linear-gradient(rgba(11, 15, 25, 0.85), rgba(11, 15, 25, 0.85)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000'); background-size: cover; }
         
-        /* CARDS & LAYOUT */
+        /* VIDEO SECTION */
+        .video-container { max-width: 800px; margin: 40px auto; padding: 0 20px; text-align: center; }
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 15px; border: 2px solid var(--primary); box-shadow: 0 0 20px rgba(0, 210, 255, 0.2); }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+
         .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
         .card { background: #1e293b; border-radius: 15px; overflow: hidden; border: 1px solid #334155; text-align: center; transition: 0.3s; }
         .card img { width: 100%; height: 200px; object-fit: cover; }
+        
         .price-tag { font-size: 1.3rem; color: var(--accent); font-weight: bold; margin: 10px 0; display: block; }
         .btn { background: var(--primary); color: #0f172a; padding: 12px 30px; text-decoration: none; border-radius: 50px; font-weight: bold; display: inline-block; cursor: pointer; border: none; }
         .whatsapp-btn { background: var(--success); color: white; margin-top: 10px; width: 80%; }
         
-        .section-title { text-align: center; color: var(--primary); margin-top: 60px; text-transform: uppercase; }
-        .order-guide { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto; padding: 20px; }
-        .order-step { background: rgba(255, 255, 255, 0.03); padding: 30px; border-radius: 15px; border: 1px solid #1e293b; text-align: center; position: relative; }
-        .step-num { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: var(--primary); color: #000; width: 35px; height: 35px; border-radius: 50%; line-height: 35px; font-weight: bold; }
-        
-        .visitor-counter { text-align: center; padding: 20px; background: rgba(0, 210, 255, 0.05); color: var(--primary); }
+        .floating-share { position: fixed; bottom: 20px; right: 20px; background: var(--success); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 999; text-decoration: none; }
+        .visitor-counter { text-align: center; padding: 20px; background: rgba(0, 210, 255, 0.05); color: var(--primary); margin-top: 40px; }
         footer { text-align: center; padding: 50px; background: #070a13; color: #64748b; border-top: 1px solid #334155; }
     </style>
 </head>
@@ -50,10 +38,12 @@
 <div id="welcome-overlay">
     <div class="welcome-box">
         <h2>Ultimate Internet</h2>
-        <p>Welcome to Nigeria's #1 Digital Plug. <br> High-speed Data & Social Media Growth awaits you.</p>
+        <p>Your #1 Premium Digital Service Plug.</p>
         <button class="btn" onclick="enterSite()">ENTER HUB</button>
     </div>
 </div>
+
+<a href="https://wa.me/?text=Check%20out%20Ultimate%20Internet%20for%20cheap%20Data,%20TikTok%20Followers,%20and%20USA%20Numbers!%20%F0%9F%9A%80%20https://soibifaadestiny-lang.github.io/" class="floating-share" target="_blank">📲</a>
 
 <header>
     <div style="font-size: 1.5rem; font-weight: bold; color: var(--primary);">ULTIMATE INTERNET</div>
@@ -62,8 +52,15 @@
 
 <section class="hero">
     <h1>ULTIMATE HUB</h1>
-    <p>Fast. Secure. Reliable.</p>
+    <p>Watch how it works below!</p>
 </section>
+
+<div class="video-container">
+    <h2 style="color: var(--primary); margin-bottom: 20px;">🎥 How to Use Our Services</h2>
+    <div class="video-wrapper">
+        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    </div>
+</div>
 
 <div class="container" id="services">
     <div class="card">
@@ -92,20 +89,13 @@
     </div>
 </div>
 
-<h2 class="section-title">How to Order</h2>
-<div class="order-guide">
-    <div class="order-step"><div class="step-num">1</div><h3>Select Service</h3><p>Choose what you need.</p></div>
-    <div class="order-step"><div class="step-num">2</div><h3>Pay Admin</h3><p>Pay via OPay/PalmPay.</p></div>
-    <div class="order-step"><div class="step-num">3</div><h3>Get Results</h3><p>Instant activation.</p></div>
-</div>
-
 <div class="visitor-counter">
     <span>🌐 TOTAL VISITS: </span>
-    <img src="https://hitwebcounter.com/counter/counter.php?page=ultimate_hub_live_2026&style=0005&nbdigits=5&type=page&initCount=0" title="Free Counter" Alt="web counter" border="0" style="vertical-align: middle;">
+    <img src="https://hitwebcounter.com/counter/counter.php?page=ultimate_hub_video_ver&style=0005&nbdigits=5&type=page&initCount=0" border="0" style="vertical-align: middle;">
 </div>
 
 <footer>
-    <p>&copy; 2026 ULTIMATE INTERNET. Admin: 08107390666</p>
+    <p>&copy; 2026 ULTIMATE INTERNET. Admin: 09025893450</p>
 </footer>
 
 <script>
@@ -118,5 +108,5 @@
 </script>
 
 </body>
-    </html>
+        </html>
     
