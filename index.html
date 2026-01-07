@@ -6,28 +6,54 @@
     <title>ULTIMATE INTERNET | Trust & Growth</title>
     <style>
         :root { --primary: #00d2ff; --secondary: #3a7bd5; --dark: #0f172a; --accent: #ff9900; --success: #25d366; }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #0b0f19; color: white; line-height: 1.6; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #0b0f19; color: white; line-height: 1.6; overflow-x: hidden; }
+        
+        /* WELCOME OVERLAY STYLES */
+        #welcome-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(11, 15, 25, 0.98);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999; transition: 0.5s;
+        }
+        .welcome-box {
+            text-align: center; padding: 40px; border: 2px solid var(--primary);
+            border-radius: 20px; background: #0f172a; box-shadow: 0 0 30px rgba(0, 210, 255, 0.3);
+            max-width: 80%;
+        }
+        .welcome-box h2 { color: var(--primary); text-transform: uppercase; margin-bottom: 10px; }
+        .welcome-box p { color: #94a3b8; margin-bottom: 25px; }
+
+        /* HEADER & HERO */
         header { background: rgba(15, 23, 42, 0.95); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--primary); position: sticky; top: 0; z-index: 1000; }
         .hero { padding: 80px 20px; text-align: center; background: linear-gradient(rgba(11, 15, 25, 0.85), rgba(11, 15, 25, 0.85)), url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=1000'); background-size: cover; background-position: center; }
-        .hero h1 { font-size: 3rem; color: var(--primary); margin: 0; text-transform: uppercase; text-shadow: 0 0 15px rgba(0, 210, 255, 0.5); }
+        .hero h1 { font-size: 3rem; color: var(--primary); text-transform: uppercase; text-shadow: 0 0 15px rgba(0, 210, 255, 0.5); }
+        
+        /* CARDS & LAYOUT */
         .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
         .card { background: #1e293b; border-radius: 15px; overflow: hidden; border: 1px solid #334155; text-align: center; transition: 0.3s; }
-        .card:hover { border-color: var(--primary); transform: translateY(-10px); }
         .card img { width: 100%; height: 200px; object-fit: cover; }
-        .card-content { padding: 20px; }
         .price-tag { font-size: 1.3rem; color: var(--accent); font-weight: bold; margin: 10px 0; display: block; }
-        .btn { background: var(--primary); color: #0f172a; padding: 12px 30px; text-decoration: none; border-radius: 50px; font-weight: bold; display: inline-block; transition: 0.3s; }
+        .btn { background: var(--primary); color: #0f172a; padding: 12px 30px; text-decoration: none; border-radius: 50px; font-weight: bold; display: inline-block; cursor: pointer; border: none; }
         .whatsapp-btn { background: var(--success); color: white; margin-top: 10px; width: 80%; }
-        .section-title { text-align: center; color: var(--primary); margin-top: 60px; text-transform: uppercase; letter-spacing: 2px; }
+        
+        .section-title { text-align: center; color: var(--primary); margin-top: 60px; text-transform: uppercase; }
         .order-guide { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; max-width: 1000px; margin: 0 auto; padding: 20px; }
         .order-step { background: rgba(255, 255, 255, 0.03); padding: 30px; border-radius: 15px; border: 1px solid #1e293b; text-align: center; position: relative; }
         .step-num { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: var(--primary); color: #000; width: 35px; height: 35px; border-radius: 50%; line-height: 35px; font-weight: bold; }
-        .payment-methods { text-align: center; padding: 40px 20px; background: #1e293b; margin-top: 50px; }
-        .pay-badge { display: inline-block; background: #0b0f19; padding: 10px 20px; margin: 5px; border-radius: 5px; border: 1px solid #334155; font-weight: bold; color: var(--primary); }
+        
+        .visitor-counter { text-align: center; padding: 20px; background: rgba(0, 210, 255, 0.05); color: var(--primary); }
         footer { text-align: center; padding: 50px; background: #070a13; color: #64748b; border-top: 1px solid #334155; }
     </style>
 </head>
 <body>
+
+<div id="welcome-overlay">
+    <div class="welcome-box">
+        <h2>Ultimate Internet</h2>
+        <p>Welcome to Nigeria's #1 Digital Plug. <br> High-speed Data & Social Media Growth awaits you.</p>
+        <button class="btn" onclick="enterSite()">ENTER HUB</button>
+    </div>
+</div>
 
 <header>
     <div style="font-size: 1.5rem; font-weight: bold; color: var(--primary);">ULTIMATE INTERNET</div>
@@ -35,14 +61,14 @@
 </header>
 
 <section class="hero">
-    <h1>ULTIMATE INTERNET</h1>
-    <p>Premium Digital Growth & High-Speed Data Plug.</p>
+    <h1>ULTIMATE HUB</h1>
+    <p>Fast. Secure. Reliable.</p>
 </section>
 
 <div class="container" id="services">
     <div class="card">
         <img src="https://images.unsplash.com/photo-1611605698335-8b1569810432?q=80&w=500" alt="TikTok">
-        <div class="card-content">
+        <div style="padding: 20px;">
             <h3>TikTok Growth</h3>
             <span class="price-tag">₦2,500 / 1k</span>
             <a href="https://wa.me/2349025893450?text=I+want+to+buy+TikTok+Followers" class="btn whatsapp-btn">Order Now</a>
@@ -50,7 +76,7 @@
     </div>
     <div class="card">
         <img src="https://images.unsplash.com/photo-1512428559087-560fa5ceab42?q=80&w=500" alt="USA Number">
-        <div class="card-content">
+        <div style="padding: 20px;">
             <h3>USA Numbers</h3>
             <span class="price-tag">₦7,000</span>
             <a href="https://wa.me/2349025893450?text=I+need+a+USA+Number" class="btn whatsapp-btn">Get Number</a>
@@ -58,42 +84,39 @@
     </div>
     <div class="card">
         <img src="https://images.unsplash.com/photo-1563986768609-322da13575f3?q=80&w=500" alt="Data">
-        <div class="card-content">
+        <div style="padding: 20px;">
             <h3>MTN/Airtel Data</h3>
             <span class="price-tag">₦500 / GB</span>
             <a href="https://wa.me/2349025893450?text=I+want+to+buy+Data" class="btn whatsapp-btn">Buy Data</a>
-        </div>
-    </div>
-    <div class="card">
-        <img src="https://images.unsplash.com/photo-1562577309-4932fdd64cd1?q=80&w=500" alt="Facebook">
-        <div class="card-content">
-            <h3>Aged FB Accounts</h3>
-            <span class="price-tag">₦3,000</span>
-            <a href="https://wa.me/2349025893450?text=I+want+to+buy+Aged+FB+Account" class="btn whatsapp-btn">View Stock</a>
         </div>
     </div>
 </div>
 
 <h2 class="section-title">How to Order</h2>
 <div class="order-guide">
-    <div class="order-step"><div class="step-num">1</div><h3>Select Service</h3><p>Click "Order Now" on your choice.</p></div>
-    <div class="order-step"><div class="step-num">2</div><h3>Make Payment</h3><p>Pay via OPay or PalmPay on WhatsApp.</p></div>
-    <div class="order-step"><div class="step-num">3</div><h3>Instant Delivery</h3><p>Receive your service in minutes!</p></div>
+    <div class="order-step"><div class="step-num">1</div><h3>Select Service</h3><p>Choose what you need.</p></div>
+    <div class="order-step"><div class="step-num">2</div><h3>Pay Admin</h3><p>Pay via OPay/PalmPay.</p></div>
+    <div class="order-step"><div class="step-num">3</div><h3>Get Results</h3><p>Instant activation.</p></div>
 </div>
 
-<div class="payment-methods">
-    <h3>Accepted Payments</h3>
-    <div class="pay-badge">OPay</div>
-    <div class="pay-badge">PalmPay</div>
-    <div class="pay-badge">Bank Transfer</div>
-    <div class="pay-badge">Kuda</div>
+<div class="visitor-counter">
+    <span>🌐 LIVE VISITS: </span>
+    <img src="https://hitwebcounter.com/counter/counter.php?page=ultimateinternet&style=0005&nbdigits=5&type=page&initCount=150" border="0" style="vertical-align: middle;">
 </div>
-<p><a href="README.md" style="color: var(--primary); text-decoration: none; font-size: 0.8rem;">View Project Documentation</a></p>
-    
+
 <footer>
     <p>&copy; 2026 ULTIMATE INTERNET. Admin: 08107390666</p>
 </footer>
 
+<script>
+    function enterSite() {
+        document.getElementById('welcome-overlay').style.opacity = '0';
+        setTimeout(() => {
+            document.getElementById('welcome-overlay').style.display = 'none';
+        }, 500);
+    }
+</script>
+
 </body>
-        </html>
-                                
+    </html>
+    
