@@ -16,12 +16,18 @@
         
         .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; }
         .card { background: #1e293b; border-radius: 15px; overflow: hidden; border: 1px solid #334155; text-align: center; transition: 0.3s; }
-        .card img { width: 100%; height: 220px; object-fit: contain; background: #161e2d; padding: 15px; }
+        .card img { width: 100%; height: 200px; object-fit: contain; background: #161e2d; padding: 15px; }
+        
+        /* PAYMENT SECTION STYLES */
+        .payment-section { background: #161e2d; padding: 40px 20px; text-align: center; border-radius: 20px; margin: 20px; border: 1px dashed var(--primary); }
+        .account-box { background: #0f172a; padding: 20px; border-radius: 10px; display: inline-block; margin-top: 15px; border: 1px solid var(--secondary); }
+        .account-number { font-size: 1.8rem; letter-spacing: 2px; color: var(--primary); font-weight: bold; display: block; margin: 10px 0; }
         
         .price-tag { font-size: 1.3rem; color: var(--accent); font-weight: bold; margin: 10px 0; display: block; }
         .btn { background: var(--primary); color: #0f172a; padding: 12px 30px; text-decoration: none; border-radius: 50px; font-weight: bold; display: inline-block; cursor: pointer; border: none; }
         .whatsapp-btn { background: var(--success); color: white; margin-top: 10px; width: 80%; }
-        
+        .verify-btn { background: #ffffff; color: #000; margin-top: 20px; }
+
         .floating-share { position: fixed; bottom: 20px; right: 20px; background: var(--success); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 999; text-decoration: none; }
         .visitor-counter { text-align: center; padding: 20px; background: rgba(0, 210, 255, 0.05); color: var(--primary); margin-top: 40px; }
         footer { text-align: center; padding: 50px; background: #070a13; color: #64748b; border-top: 1px solid #334155; }
@@ -32,7 +38,7 @@
 <div id="welcome-overlay">
     <div class="welcome-box">
         <h2>Ultimate Internet</h2>
-        <p>Premium Data, Social Growth & Global Numbers.</p>
+        <p>Your #1 Premium Digital Service Plug.</p>
         <button class="btn" onclick="enterSite()">ENTER HUB</button>
     </div>
 </div>
@@ -46,7 +52,7 @@
 
 <section class="hero">
     <h1>ULTIMATE HUB</h1>
-    <p>Your Global Digital Service Plug.</p>
+    <p>Fast. Secure. Reliable.</p>
 </section>
 
 <div class="container" id="services">
@@ -62,9 +68,8 @@
         <img src="https://cdn-icons-png.flaticon.com/512/814/814513.png" alt="Global Numbers">
         <div style="padding: 20px;">
             <h3>Global Numbers</h3>
-            <p style="font-size: 0.8rem; color: #94a3b8;">USA, UK, Canada, & more</p>
             <span class="price-tag">From ₦7,000</span>
-            <a href="https://wa.me/2349025893450?text=I+need+an+International+Number.+Please+tell+me+available+countries." class="btn whatsapp-btn">Check Availability</a>
+            <a href="https://wa.me/2349025893450?text=I+need+a+Global+Number" class="btn whatsapp-btn">Check Availability</a>
         </div>
     </div>
     <div class="card">
@@ -77,9 +82,29 @@
     </div>
 </div>
 
+<div class="payment-section">
+    <h2 style="color: var(--primary);">💳 MAKE PAYMENT</h2>
+    <p>Transfer the total amount to the account below:</p>
+    
+    <div class="account-box">
+        <span style="color: #94a3b8; font-size: 0.9rem;">BANK NAME:</span>
+        <strong style="display: block; font-size: 1.2rem;">OPAY / PALMPAY</strong>
+        
+        <span style="color: #94a3b8; font-size: 0.9rem; margin-top: 10px; display: block;">ACCOUNT NUMBER:</span>
+        <span class="account-number">9025893450</span>
+        
+        <span style="color: #94a3b8; font-size: 0.9rem;">ACCOUNT NAME:</span>
+        <strong style="display: block; font-size: 1.1rem;">SOIBIFA DESTINY</strong>
+    </div>
+
+    <br>
+    <a href="https://wa.me/2349025893450?text=I+have+made+a+payment.+Here+is+my+receipt: " class="btn verify-btn">✅ SEND RECEIPT (WHATSAPP)</a>
+    <p style="font-size: 0.8rem; color: #64748b; margin-top: 10px;">Orders are processed within 5-10 minutes after verification.</p>
+</div>
+
 <div class="visitor-counter">
     <span>🌐 TOTAL VISITS: </span>
-    <img src="https://hitwebcounter.com/counter/counter.php?page=ultimate_hub_global_ver&style=0005&nbdigits=5&type=page&initCount=0" border="0" style="vertical-align: middle;">
+    <img src="https://hitwebcounter.com/counter/counter.php?page=ultimate_hub_payment_ver&style=0005&nbdigits=5&type=page&initCount=0" border="0" style="vertical-align: middle;">
 </div>
 
 <footer>
