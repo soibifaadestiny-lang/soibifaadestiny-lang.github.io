@@ -3,209 +3,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ULTIMATE HUB | Member Dashboard</title>
+    <title>ULTIMATE HUB | Master Business Portal</title>
     <script src="https://checkout.flutterwave.com/v3.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root { --primary: #00d2ff; --dark: #0b0f19; --card: #1e293b; --success: #25d366; --accent: #ff9900; --glass: rgba(255, 255, 255, 0.05); }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: var(--dark); color: white; text-align: center; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: var(--dark); color: white; text-align: center; overflow-x: hidden; }
         
-        /* THE CUSTOM LOGIN BACKGROUND */
-        #auth-overlay { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            background: linear-gradient(rgba(11, 15, 25, 0.8), rgba(11, 15, 25, 0.8)), 
-                        url('https://images.unsplash.com/photo-1614850523296-d8c1af93d400?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); 
-            background-size: cover; background-position: center;
-            z-index: 50000; display: flex; justify-content: center; align-items: center; padding: 20px; 
-        }
+        /* AUTH OVERLAY & BACKGROUND */
+        #auth-overlay { position: fixed; inset: 0; background: linear-gradient(rgba(11,15,25,0.85), rgba(11,15,25,0.85)), url('https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&w=1350&q=80'); background-size: cover; z-index: 50000; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .auth-card { background: rgba(30,41,59,0.95); padding: 30px; border-radius: 24px; border: 2px solid var(--primary); max-width: 400px; width: 100%; backdrop-filter: blur(10px); box-shadow: 0 0 40px rgba(0, 210, 255, 0.3); }
         
-        .auth-card { 
-            background: rgba(30, 41, 59, 0.95); padding: 30px; border-radius: 24px; 
-            border: 2px solid var(--primary); max-width: 400px; width: 100%; 
-            box-shadow: 0 0 50px rgba(0, 210, 255, 0.3); backdrop-filter: blur(10px);
-        }
-        
-        .profile-upload-area { margin-bottom: 20px; position: relative; display: inline-block; }
-        #profile-preview { width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--primary); object-fit: cover; background: #0b0f19; }
-        .file-input-label { display: block; margin-top: 10px; font-size: 0.8rem; color: var(--primary); cursor: pointer; font-weight: bold; }
-        #profile-input { display: none; }
-
-        .auth-card input { width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; border: 1px solid #334155; background: #0b0f19; color: white; box-sizing: border-box; outline: none; }
-        .auth-btn { width: 100%; background: var(--primary); color: #0b0f19; padding: 15px; border-radius: 10px; font-weight: bold; border: none; cursor: pointer; margin-top: 10px; }
-
-        /* HEADER & NAVIGATION */
+        /* NAVIGATION */
         header { padding: 12px 20px; background: #161e2d; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
-        .nav-user { display: flex; align-items: center; gap: 10px; }
         .nav-avatar { width: 38px; height: 38px; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover; }
-        .logout-btn { background: rgba(255, 77, 77, 0.1); color: #ff4d4d; padding: 5px 12px; border-radius: 6px; font-size: 0.75rem; cursor: pointer; border: 1px solid #ff4d4d; }
-
-        /* CONTENT SECTIONS */
-        .main-content { max-width: 1100px; margin: 0 auto; padding: 20px; }
-        .dash-card { background: var(--card); border-radius: 20px; padding: 25px; border: 1px solid #334155; margin-bottom: 25px; text-align: left; }
-        .target-input { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid var(--accent); background: #0b0f19; color: white; margin-bottom: 20px; box-sizing: border-box; font-size: 1rem; }
         
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .item-row { background: var(--glass); padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-        .buy-btn { background: var(--primary); color: #0b0f19; padding: 8px 16px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; }
+        /* CONTENT CARDS */
+        .main-content { max-width: 1100px; margin: 0 auto; padding: 20px; }
+        .dash-card { background: var(--card); border-radius: 20px; padding: 25px; border: 1px solid #334155; margin-bottom: 25px; text-align: left; position: relative; }
+        .target-input { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid var(--accent); background: #0b0f19; color: white; margin-bottom: 15px; box-sizing: border-box; outline: none; }
+        
+        /* BUTTONS */
+        .buy-btn { background: var(--primary); color: #0b0f19; padding: 12px 20px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; transition: 0.3s; }
+        .buy-btn:active { transform: scale(0.95); }
+        .withdraw-btn { background: #ff4d4d; color: white; margin-top: 15px; width: 100%; }
 
-        /* THANK YOU / SUCCESS SCREEN */
-        #success-overlay { display: none; position: fixed; inset: 0; background: var(--dark); z-index: 100000; flex-direction: column; justify-content: center; align-items: center; padding: 30px; }
-        .success-card { background: var(--card); padding: 40px; border-radius: 30px; border: 2px solid var(--success); max-width: 450px; width: 100%; text-align: center; }
-        .success-icon { width: 70px; height: 70px; background: var(--success); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 40px; margin: 0 auto 20px; color: white; }
+        /* FLOATING HELP BUTTON */
+        .help-fab { position: fixed; bottom: 20px; right: 20px; background: var(--success); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.4); cursor: pointer; z-index: 9999; font-size: 24px; text-decoration: none; border: 2px solid white; transition: 0.3s; }
+        .help-fab:hover { transform: scale(1.1); }
 
-        #loader { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 99999; flex-direction: column; justify-content: center; align-items: center; }
+        /* SUCCESS & RECEIPT UI */
+        #success-overlay { display: none; position: fixed; inset: 0; background: var(--dark); z-index: 100000; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
+        #receipt-card { background: white; color: #333; padding: 30px; border-radius: 15px; width: 100%; max-width: 320px; text-align: left; margin-bottom: 20px; }
+        .receipt-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.85rem; border-bottom: 1px solid #eee; padding-bottom: 4px; }
+
+        /* ADMIN MODAL */
+        #admin-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 999999; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
+        
+        #loader { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:99999; justify-content:center; align-items:center; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-<div id="loader">
-    <div style="width: 50px; height: 50px; border: 5px solid #334155; border-top: 5px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+<div id="loader"><div style="width:50px; height:50px; border:5px solid #334155; border-top:5px solid var(--primary); border-radius:50%; animation:spin 1s linear infinite;"></div></div>
+
+<a href="https://wa.me/2349025893450?text=Hello, I need help with my Ultimate Hub account." class="help-fab" title="Live Support">🆘</a>
+
+<div id="admin-modal">
+    <div class="dash-card" style="width:100%; max-width:400px; text-align:center;">
+        <h2 style="color:var(--accent); margin-bottom:5px;">ADMIN PANEL</h2>
+        <p style="font-size:12px; color:#94a3b8; margin-bottom:20px;">Private Revenue Tracker</p>
+        <div style="margin:20px 0;">
+            <p style="margin:0; font-size:14px;">TOTAL REVENUE</p>
+            <div id="stat-revenue" style="font-size:2.5rem; color:var(--success); font-weight:bold;">₦0</div>
+            <p style="margin:15px 0 0 0; font-size:14px;">TOTAL SALES</p>
+            <div id="stat-count" style="font-size:2.5rem; color:var(--primary); font-weight:bold;">0</div>
+        </div>
+        <button class="buy-btn" style="width:100%;" onclick="document.getElementById('admin-modal').style.display='none'">Exit Admin View</button>
+        <button class="buy-btn" style="background:#ff4d4d; color:white; margin-top:10px; width:100%; font-size:12px;" onclick="if(confirm('Wipe all profit data?')){localStorage.removeItem('adminStats'); location.reload();}">Reset Stats</button>
+    </div>
 </div>
 
 <div id="success-overlay">
-    <div class="success-card">
-        <div class="success-icon">✓</div>
-        <h1 style="color: var(--success); margin: 0;">ORDER PLACED!</h1>
-        <p id="success-msg" style="color: #94a3b8; font-size: 1.1rem; margin: 15px 0;"></p>
-        <p style="color: var(--accent); font-weight: bold;">Sending receipt to WhatsApp for delivery...</p>
+    <div id="receipt-card">
+        <div style="text-align:center; border-bottom:2px solid #333; margin-bottom:15px; padding-bottom:10px;">
+            <h2 style="margin:0; font-size:1.2rem;">ULTIMATE HUB</h2>
+            <small>VERIFIED TRANSACTION</small>
+        </div>
+        <div class="receipt-row"><span>Purchased:</span> <b id="r-item"></b></div>
+        <div class="receipt-row"><span>Target:</span> <b id="r-target"></b></div>
+        <div class="receipt-row"><span>Price:</span> <b id="r-price"></b></div>
+        <div class="receipt-row"><span>Ref Code:</span> <b id="r-ref"></b></div>
+        <div class="receipt-row"><span>Date:</span> <b id="r-date"></b></div>
+        <div style="text-align:center; margin-top:20px; color:green; font-weight:bold; letter-spacing:1px;">SUCCESSFUL ✓</div>
     </div>
+    <button class="buy-btn" style="background:var(--accent); width:320px; margin-bottom:10px;" onclick="downloadReceipt()">📥 DOWNLOAD RECEIPT PHOTO</button>
+    <button class="buy-btn" style="background:var(--success); color:white; width:320px;" id="wa-btn">💬 SEND TO WHATSAPP</button>
 </div>
 
 <div id="auth-overlay">
     <div class="auth-card">
-        <h2 style="color: var(--primary); margin: 0 0 10px 0;">Ultimate Hub</h2>
-        <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 20px;">Join the elite marketplace.</p>
-        
-        <div class="profile-upload-area">
-            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" id="profile-preview">
-            <label for="profile-input" class="file-input-label">Choose Avatar Image</label>
-            <input type="file" id="profile-input" accept="image/*" onchange="previewImage(this)">
+        <h2 style="color: var(--primary); margin:0;">Ultimate Hub</h2>
+        <p style="font-size:12px; color:#94a3b8; margin-bottom:20px;">Join the Cyber Marketplace</p>
+        <div style="margin-bottom: 15px;">
+            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" id="p-prev" style="width:90px;height:90px;border-radius:50%;border:3px solid var(--primary);object-fit:cover; background:#000;">
+            <label style="display:block;font-size:12px;color:var(--primary);cursor:pointer;margin-top:10px; font-weight:bold;"><u>Upload Profile Picture</u><input type="file" id="p-in" hidden onchange="pView(this)"></label>
         </div>
-
-        <input type="text" id="regName" placeholder="Full Name">
-        <input type="email" id="regEmail" placeholder="Email Address">
-        <input type="password" id="regPass" placeholder="Password">
-        <button class="auth-btn" onclick="register()">Access Dashboard 🚀</button>
+        <input type="text" id="r-name" placeholder="Full Name">
+        <input type="email" id="r-email" placeholder="Email Address">
+        <button class="buy-btn" style="width:100%; margin-top:10px;" onclick="register()">Create My Dashboard 🚀</button>
     </div>
 </div>
 
 <header>
-    <div style="font-weight: bold; color: var(--primary);">ULTIMATE HUB</div>
-    <div class="nav-user">
-        <img id="navAvatar" src="" class="nav-avatar" style="display:none;">
-        <span id="userName" style="font-size: 0.85rem; color: var(--accent); font-weight: bold;"></span>
-        <button class="logout-btn" onclick="logout()">Logout</button>
+    <div id="admin-trigger" style="font-weight: bold; color: var(--primary); cursor:pointer; font-size:1.1rem; letter-spacing:1px;">ULTIMATE HUB</div>
+    <div style="display:flex; align-items:center; gap:12px;">
+        <img id="h-av" src="" class="nav-avatar" style="display:none;">
+        <span id="h-name" style="font-size:14px; font-weight:bold; color:var(--accent);"></span>
+        <button onclick="logout()" style="background:none; border:1px solid #ff4d4d; color:#ff4d4d; padding:4px 10px; border-radius:6px; font-size:10px; font-weight:bold; cursor:pointer;">Exit</button>
     </div>
 </header>
 
 <div class="main-content">
     <div class="dash-card" style="border-color: var(--accent);">
-        <h3 style="margin-top: 0; color: var(--accent);">💰 Affiliate Center</h3>
-        <p style="font-size: 0.8rem; color: #94a3b8;">Referral Link: <span id="linkText" style="color: var(--primary);">...</span></p>
-        <button class="buy-btn" style="background: var(--accent); width: 100%; color: black;" onclick="copyRefLink()">📋 COPY MY REFERRAL LINK</button>
-    </div>
-
-    <div class="dash-card">
-        <h3>🛒 Market Services</h3>
-        <input type="text" id="targetAccount" class="target-input" placeholder="TikTok Username / Phone Number">
-        <div class="grid">
-            <div>
-                <h4 style="color: var(--primary);">📶 Data</h4>
-                <div class="item-row"><span>MTN 1GB</span> <strong>₦500</strong> <button class="buy-btn" onclick="pay('MTN 1GB', 500)">Order</button></div>
-                <div class="item-row"><span>MTN 5GB</span> <strong>₦2,500</strong> <button class="buy-btn" onclick="pay('MTN 5GB', 2500)">Order</button></div>
-            </div>
-            <div>
-                <h4 style="color: var(--primary);">📈 Growth</h4>
-                <div class="item-row"><span>1k TikTok Fans</span> <strong>₦2,500</strong> <button class="buy-btn" onclick="pay('1k TikTok Followers', 2500)">Order</button></div>
-            </div>
+        <h3 style="color: var(--accent); margin-top:0;">💰 Affiliate Dashboard</h3>
+        <p style="font-size:12px; color:#94a3b8; margin-bottom:8px;">Your Link (Earn 10% on every referral):</p>
+        <div id="ref-link" style="background: #0b0f19; padding: 12px; border-radius: 10px; font-size: 11px; color: var(--primary); border: 1px dashed #334155; word-break: break-all;">...</div>
+        <button class="buy-btn" style="background:var(--accent); width:100%; color:black; margin-top:12px;" onclick="copyL()">📋 COPY REFERRAL LINK</button>
+        
+        <div style="margin-top:25px; padding-top:20px; border-top:1px solid #334155;">
+            <h4 style="margin:0 0 10px 0;">Request Withdrawal</h4>
+            <input type="text" id="bank-info" class="target-input" placeholder="Bank Name, Account Number & Amount">
+            <button class="buy-btn withdraw-btn" onclick="withdraw()">💸 SEND WITHDRAWAL REQUEST</button>
         </div>
     </div>
 
     <div class="dash-card">
-        <h3>🕒 Recent Orders</h3>
-        <div id="activity-list"><p style="color: #64748b; font-size: 0.85rem;">No history yet.</p></div>
+        <h3>🛒 Marketplace</h3>
+        <input type="text" id="target" class="target-input" placeholder="Enter Target (Phone No / Username)">
+        
+        <div style="background:var(--glass); padding:15px; border-radius:15px; display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border:1px solid rgba(255,255,255,0.1);">
+            <div><b style="display:block;">MTN 1GB Data</b><small style="color:#94a3b8;">Instant Delivery</small></div>
+            <div style="display:flex; align-items:center; gap:15px;"><b>₦500</b><button class="buy-btn" style="padding:8px 15px;" onclick="startPay('MTN 1GB', 500)">Buy</button></div>
+        </div>
+        
+        <div style="background:var(--glass); padding:15px; border-radius:15px; display:flex; justify-content:space-between; align-items:center; border:1px solid rgba(255,255,255,0.1);">
+            <div><b style="display:block;">1k TikTok Followers</b><small style="color:#94a3b8;">High Quality Fans</small></div>
+            <div style="display:flex; align-items:center; gap:15px;"><b>₦2,500</b><button class="buy-btn" style="padding:8px 15px;" onclick="startPay('1k TikTok Followers', 2500)">Buy</button></div>
+        </div>
     </div>
 </div>
 
 <script>
-    let profilePicBase64 = "";
+    let profilePic = "";
+    let clicks = 0;
+    const params = new URLSearchParams(window.location.search);
+    if(params.get('ref')) localStorage.setItem('referralSrc', params.get('ref'));
 
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('ref')) { localStorage.setItem('activeReferrer', urlParams.get('ref')); }
+    // Admin Tracker (5-Click Secret)
+    document.getElementById('admin-trigger').addEventListener('click', () => {
+        clicks++;
+        if(clicks >= 5) {
+            const stats = JSON.parse(localStorage.getItem('adminStats')) || {rev:0, count:0};
+            document.getElementById('stat-revenue').innerText = "₦" + stats.rev;
+            document.getElementById('stat-count').innerText = stats.count;
+            document.getElementById('admin-modal').style.display = 'flex';
+            clicks = 0;
+        }
+        setTimeout(() => { if(clicks > 0) clicks = 0; }, 3000); // Reset clicks after 3 seconds of inactivity
+    });
 
-    function previewImage(input) {
-        if (input.files && input.files[0]) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                document.getElementById('profile-preview').src = e.target.result;
-                profilePicBase64 = e.target.result;
-            };
-            reader.readAsDataURL(input.files[0]);
+    function pView(i){
+        if(i.files && i.files[0]){
+            const r = new FileReader();
+            r.onload=(e)=>{ document.getElementById('p-prev').src=e.target.result; profilePic=e.target.result; };
+            r.readAsDataURL(i.files[0]);
         }
     }
 
-    function register() {
-        const name = document.getElementById('regName').value, email = document.getElementById('regEmail').value;
-        const affID = "ULT-" + Math.floor(1000 + Math.random() * 9000);
-        if (name && email) {
-            const user = { name, email, affID, avatar: profilePicBase64, history: [] };
-            localStorage.setItem('ultimateUser', JSON.stringify(user));
+    function register(){
+        const n=document.getElementById('r-name').value, e=document.getElementById('r-email').value;
+        if(n && e){
+            localStorage.setItem('uHub', JSON.stringify({n, e, id: "ULT-"+Math.floor(1000+Math.random()*9000), av: profilePic}));
             location.reload();
-        }
+        } else { alert("Please enter your name and email."); }
     }
 
-    window.onload = function() {
-        const user = JSON.parse(localStorage.getItem('ultimateUser'));
-        if (user) {
-            document.getElementById('auth-overlay').style.display = 'none';
-            document.getElementById('userName').innerText = "Hi, " + user.name.split(' ')[0];
-            document.getElementById('navAvatar').src = user.avatar || "https://cdn-icons-png.flaticon.com/512/149/149071.png";
-            document.getElementById('navAvatar').style.display = 'block';
-            document.getElementById('linkText').innerText = window.location.origin + window.location.pathname + "?ref=" + user.affID;
-            if (user.history && user.history.length > 0) {
-                document.getElementById('activity-list').innerHTML = user.history.reverse().slice(0, 3).map(h => `
-                    <div style="display:flex;justify-content:space-between;border-bottom:1px solid #334155;padding:8px 0;font-size:0.85rem">
-                        <span>${h.item}</span><span style="color:var(--success)">₦${h.price} ✅</span>
-                    </div>
-                `).join('');
-            }
+    window.onload=()=>{
+        const u = JSON.parse(localStorage.getItem('uHub'));
+        if(u){
+            document.getElementById('auth-overlay').style.display='none';
+            document.getElementById('h-name').innerText = u.n.split(' ')[0];
+            document.getElementById('h-av').src = u.av || "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+            document.getElementById('h-av').style.display = 'block';
+            document.getElementById('ref-link').innerText = window.location.origin + window.location.pathname + "?ref=" + u.id;
         }
     };
 
-    function copyRefLink() {
-        navigator.clipboard.writeText(document.getElementById('linkText').innerText);
-        alert("Referral link copied!");
-    }
+    function startPay(item, price) {
+        const targetVal = document.getElementById('target').value;
+        const user = JSON.parse(localStorage.getItem('uHub'));
+        const refSource = localStorage.getItem('referralSrc') || "DIRECT";
+        if (!targetVal) return alert("Please enter target (Phone/Username)!");
 
-    function logout() { localStorage.removeItem('ultimateUser'); location.reload(); }
-
-    function pay(item, price) {
-        const target = document.getElementById('targetAccount').value;
-        const user = JSON.parse(localStorage.getItem('ultimateUser'));
-        const referrer = localStorage.getItem('activeReferrer') || "DIRECT";
-        if (!target) return alert("Enter target details!");
+        document.getElementById('loader').style.display = 'flex';
 
         FlutterwaveCheckout({
             public_key: "FLWPUBK_TEST-3c05ac79962d03be3d13cf562a8b0d34-X",
-            tx_ref: "ULT-" + Date.now(),
-            amount: price,
-            currency: "NGN",
+            tx_ref: "ULT-" + Date.now(), amount: price, currency: "NGN",
             customer: { email: user.email, name: user.name },
             callback: function (data) {
                 if (data.status === "successful") {
-                    user.history.push({ item, price });
-                    localStorage.setItem('ultimateUser', JSON.stringify(user));
-                    document.getElementById('success-msg').innerText = "Confirmed order for " + item;
+                    // Update Profit Tracker
+                    let stats = JSON.parse(localStorage.getItem('adminStats')) || {rev:0, count:0};
+                    stats.rev += price; stats.count += 1;
+                    localStorage.setItem('adminStats', JSON.stringify(stats));
+
+                    // Receipt Info
+                    document.getElementById('r-item').innerText = item;
+                    document.getElementById('r-target').innerText = targetVal;
+                    document.getElementById('r-price').innerText = "₦" + price;
+                    document.getElementById('r-ref').innerText = user.id;
+                    document.getElementById('r-date').innerText = new Date().toLocaleString();
+                    
+                    document.getElementById('loader').style.display = 'none';
                     document.getElementById('success-overlay').style.display = 'flex';
-                    setTimeout(() => {
-                        const receipt = `✅ NEW ORDER\n\nItem: ${item}\nTarget: ${target}\nBuyer: ${user.name}\nReferrer: ${referrer}`;
-                        window.location.href = "https://wa.me/2349025893450?text=" + encodeURIComponent(receipt);
-                    }, 4000);
+                    
+                    const waLink = "https://wa.me/2349025893450?text=" + encodeURIComponent(`✅ *NEW ORDER PLACED*\n\n*Service:* ${item}\n*Target:* ${targetVal}\n*Amount:* ₦${price}\n*User:* ${user.name}\n*User ID:* ${user.id}\n*Referrer:* ${refSource}\n*TransID:* ${data.transaction_id}`);
+                    
+                    document.getElementById('wa-btn').onclick = () => { window.location.assign(waLink); };
+                    setTimeout(() => { window.location.assign(waLink); }, 5000);
                 }
-            }
+            },
+            onclose: function() { document.getElementById('loader').style.display = 'none'; }
         });
     }
+
+    function withdraw() {
+        const info = document.getElementById('bank-info').value;
+        const user = JSON.parse(localStorage.getItem('uHub'));
+        if(!info) return alert("Please enter your bank info and the amount!");
+        window.location.assign("https://wa.me/2349025893450?text=" + encodeURIComponent(`💸 *WITHDRAWAL REQUEST*\n\n*Name:* ${user.name}\n*ID:* ${user.id}\n*Request:* ${info}`));
+    }
+
+    function downloadReceipt() {
+        html2canvas(document.querySelector("#receipt-card")).then(canvas => {
+            let link = document.createElement('a'); link.download = 'UltimateHub_Receipt.png';
+            link.href = canvas.toDataURL(); link.click();
+        });
+    }
+
+    function copyL(){ navigator.clipboard.writeText(document.getElementById('ref-link').innerText); alert("Referral Link Copied!"); }
+    function logout(){ localStorage.removeItem('uHub'); location.reload(); }
 </script>
 </body>
-    </html>
-    
+            </html>
+            
