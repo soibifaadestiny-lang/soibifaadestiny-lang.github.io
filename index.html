@@ -3,67 +3,209 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ULTIMATE HUB | Member Portal</title>
+    <title>ULTIMATE HUB | Member Dashboard</title>
     <script src="https://checkout.flutterwave.com/v3.js"></script>
     <style>
         :root { --primary: #00d2ff; --dark: #0b0f19; --card: #1e293b; --success: #25d366; --accent: #ff9900; --glass: rgba(255, 255, 255, 0.05); }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: var(--dark); color: white; text-align: center; overflow-x: hidden; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: var(--dark); color: white; text-align: center; }
         
-        /* AUTH MODAL */
-        #auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark); z-index: 50000; display: flex; justify-content: center; align-items: center; padding: 20px; }
-        .auth-card { background: var(--card); padding: 30px; border-radius: 24px; border: 1px solid var(--primary); max-width: 400px; width: 100%; box-shadow: 0 0 40px rgba(0, 210, 255, 0.2); }
-        .upload-circle { width: 100px; height: 100px; margin: 0 auto 10px; position: relative; }
-        #profile-preview { width: 100%; height: 100%; border-radius: 50%; border: 3px solid var(--primary); object-fit: cover; background: #0b0f19; }
-        .file-label { display: block; font-size: 0.75rem; color: var(--primary); cursor: pointer; margin-bottom: 15px; text-decoration: underline; }
+        /* THE CUSTOM LOGIN BACKGROUND */
+        #auth-overlay { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: linear-gradient(rgba(11, 15, 25, 0.8), rgba(11, 15, 25, 0.8)), 
+                        url('https://images.unsplash.com/photo-1614850523296-d8c1af93d400?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'); 
+            background-size: cover; background-position: center;
+            z-index: 50000; display: flex; justify-content: center; align-items: center; padding: 20px; 
+        }
+        
+        .auth-card { 
+            background: rgba(30, 41, 59, 0.95); padding: 30px; border-radius: 24px; 
+            border: 2px solid var(--primary); max-width: 400px; width: 100%; 
+            box-shadow: 0 0 50px rgba(0, 210, 255, 0.3); backdrop-filter: blur(10px);
+        }
+        
+        .profile-upload-area { margin-bottom: 20px; position: relative; display: inline-block; }
+        #profile-preview { width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--primary); object-fit: cover; background: #0b0f19; }
+        .file-input-label { display: block; margin-top: 10px; font-size: 0.8rem; color: var(--primary); cursor: pointer; font-weight: bold; }
         #profile-input { display: none; }
+
         .auth-card input { width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; border: 1px solid #334155; background: #0b0f19; color: white; box-sizing: border-box; outline: none; }
         .auth-btn { width: 100%; background: var(--primary); color: #0b0f19; padding: 15px; border-radius: 10px; font-weight: bold; border: none; cursor: pointer; margin-top: 10px; }
 
-        /* HEADER */
+        /* HEADER & NAVIGATION */
         header { padding: 12px 20px; background: #161e2d; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
-        .nav-profile { display: flex; align-items: center; gap: 10px; }
-        .nav-avatar { width: 35px; height: 35px; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover; }
+        .nav-user { display: flex; align-items: center; gap: 10px; }
+        .nav-avatar { width: 38px; height: 38px; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover; }
+        .logout-btn { background: rgba(255, 77, 77, 0.1); color: #ff4d4d; padding: 5px 12px; border-radius: 6px; font-size: 0.75rem; cursor: pointer; border: 1px solid #ff4d4d; }
 
-        /* MAIN DASHBOARD */
+        /* CONTENT SECTIONS */
         .main-content { max-width: 1100px; margin: 0 auto; padding: 20px; }
         .dash-card { background: var(--card); border-radius: 20px; padding: 25px; border: 1px solid #334155; margin-bottom: 25px; text-align: left; }
         .target-input { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid var(--accent); background: #0b0f19; color: white; margin-bottom: 20px; box-sizing: border-box; font-size: 1rem; }
         
-        /* GRID & ROWS */
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .item-row { background: var(--glass); padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border: 1px solid transparent; transition: 0.3s; }
-        .item-row:hover { border-color: var(--primary); }
+        .item-row { background: var(--glass); padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .buy-btn { background: var(--primary); color: #0b0f19; padding: 8px 16px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; }
 
-        /* SUCCESS / THANK YOU OVERLAY */
-        #success-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark); z-index: 100000; flex-direction: column; justify-content: center; align-items: center; padding: 20px; text-align: center; }
-        .success-box { background: var(--card); padding: 40px; border-radius: 30px; border: 2px solid var(--success); max-width: 400px; }
-        .check-icon { font-size: 60px; color: var(--success); margin-bottom: 10px; }
+        /* THANK YOU / SUCCESS SCREEN */
+        #success-overlay { display: none; position: fixed; inset: 0; background: var(--dark); z-index: 100000; flex-direction: column; justify-content: center; align-items: center; padding: 30px; }
+        .success-card { background: var(--card); padding: 40px; border-radius: 30px; border: 2px solid var(--success); max-width: 450px; width: 100%; text-align: center; }
+        .success-icon { width: 70px; height: 70px; background: var(--success); border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 40px; margin: 0 auto 20px; color: white; }
 
-        /* ACTIVITY LIST */
-        .activity-item { font-size: 0.85rem; padding: 10px 0; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; }
-        
-        #loader { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:99999; flex-direction:column; justify-content:center; align-items:center; }
+        #loader { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 99999; flex-direction: column; justify-content: center; align-items: center; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
-<div id="loader"><div style="width:50px; height:50px; border:5px solid #334155; border-top:5px solid var(--primary); border-radius:50%; animation:spin 1s linear infinite;"></div></div>
+<div id="loader">
+    <div style="width: 50px; height: 50px; border: 5px solid #334155; border-top: 5px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+</div>
 
 <div id="success-overlay">
-    <div class="success-box">
-        <div class="check-icon">✓</div>
-        <h1 style="color: var(--success); margin: 0;">THANK YOU!</h1>
-        <p id="success-msg" style="color: #94a3b8; margin: 15px 0;"></p>
-        <p style="color: var(--accent); font-weight: bold; font-size: 0.9rem;">Redirecting to WhatsApp for your receipt and delivery...</p>
+    <div class="success-card">
+        <div class="success-icon">✓</div>
+        <h1 style="color: var(--success); margin: 0;">ORDER PLACED!</h1>
+        <p id="success-msg" style="color: #94a3b8; font-size: 1.1rem; margin: 15px 0;"></p>
+        <p style="color: var(--accent); font-weight: bold;">Sending receipt to WhatsApp for delivery...</p>
     </div>
 </div>
 
 <div id="auth-overlay">
     <div class="auth-card">
-        <h2 style="color: var(--primary); margin: 0 0 15px 0;">Ultimate Hub</h2>
-        <div class="upload-circle"><img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" id="profile-preview"></div>
-        <label for="profile-input" class="file-label">Upload Profile Picture</label>
-        <input type="file" id
+        <h2 style="color: var(--primary); margin: 0 0 10px 0;">Ultimate Hub</h2>
+        <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 20px;">Join the elite marketplace.</p>
+        
+        <div class="profile-upload-area">
+            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" id="profile-preview">
+            <label for="profile-input" class="file-input-label">Choose Avatar Image</label>
+            <input type="file" id="profile-input" accept="image/*" onchange="previewImage(this)">
+        </div>
+
+        <input type="text" id="regName" placeholder="Full Name">
+        <input type="email" id="regEmail" placeholder="Email Address">
+        <input type="password" id="regPass" placeholder="Password">
+        <button class="auth-btn" onclick="register()">Access Dashboard 🚀</button>
+    </div>
+</div>
+
+<header>
+    <div style="font-weight: bold; color: var(--primary);">ULTIMATE HUB</div>
+    <div class="nav-user">
+        <img id="navAvatar" src="" class="nav-avatar" style="display:none;">
+        <span id="userName" style="font-size: 0.85rem; color: var(--accent); font-weight: bold;"></span>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+</header>
+
+<div class="main-content">
+    <div class="dash-card" style="border-color: var(--accent);">
+        <h3 style="margin-top: 0; color: var(--accent);">💰 Affiliate Center</h3>
+        <p style="font-size: 0.8rem; color: #94a3b8;">Referral Link: <span id="linkText" style="color: var(--primary);">...</span></p>
+        <button class="buy-btn" style="background: var(--accent); width: 100%; color: black;" onclick="copyRefLink()">📋 COPY MY REFERRAL LINK</button>
+    </div>
+
+    <div class="dash-card">
+        <h3>🛒 Market Services</h3>
+        <input type="text" id="targetAccount" class="target-input" placeholder="TikTok Username / Phone Number">
+        <div class="grid">
+            <div>
+                <h4 style="color: var(--primary);">📶 Data</h4>
+                <div class="item-row"><span>MTN 1GB</span> <strong>₦500</strong> <button class="buy-btn" onclick="pay('MTN 1GB', 500)">Order</button></div>
+                <div class="item-row"><span>MTN 5GB</span> <strong>₦2,500</strong> <button class="buy-btn" onclick="pay('MTN 5GB', 2500)">Order</button></div>
+            </div>
+            <div>
+                <h4 style="color: var(--primary);">📈 Growth</h4>
+                <div class="item-row"><span>1k TikTok Fans</span> <strong>₦2,500</strong> <button class="buy-btn" onclick="pay('1k TikTok Followers', 2500)">Order</button></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dash-card">
+        <h3>🕒 Recent Orders</h3>
+        <div id="activity-list"><p style="color: #64748b; font-size: 0.85rem;">No history yet.</p></div>
+    </div>
+</div>
+
+<script>
+    let profilePicBase64 = "";
+
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('ref')) { localStorage.setItem('activeReferrer', urlParams.get('ref')); }
+
+    function previewImage(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                document.getElementById('profile-preview').src = e.target.result;
+                profilePicBase64 = e.target.result;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function register() {
+        const name = document.getElementById('regName').value, email = document.getElementById('regEmail').value;
+        const affID = "ULT-" + Math.floor(1000 + Math.random() * 9000);
+        if (name && email) {
+            const user = { name, email, affID, avatar: profilePicBase64, history: [] };
+            localStorage.setItem('ultimateUser', JSON.stringify(user));
+            location.reload();
+        }
+    }
+
+    window.onload = function() {
+        const user = JSON.parse(localStorage.getItem('ultimateUser'));
+        if (user) {
+            document.getElementById('auth-overlay').style.display = 'none';
+            document.getElementById('userName').innerText = "Hi, " + user.name.split(' ')[0];
+            document.getElementById('navAvatar').src = user.avatar || "https://cdn-icons-png.flaticon.com/512/149/149071.png";
+            document.getElementById('navAvatar').style.display = 'block';
+            document.getElementById('linkText').innerText = window.location.origin + window.location.pathname + "?ref=" + user.affID;
+            if (user.history && user.history.length > 0) {
+                document.getElementById('activity-list').innerHTML = user.history.reverse().slice(0, 3).map(h => `
+                    <div style="display:flex;justify-content:space-between;border-bottom:1px solid #334155;padding:8px 0;font-size:0.85rem">
+                        <span>${h.item}</span><span style="color:var(--success)">₦${h.price} ✅</span>
+                    </div>
+                `).join('');
+            }
+        }
+    };
+
+    function copyRefLink() {
+        navigator.clipboard.writeText(document.getElementById('linkText').innerText);
+        alert("Referral link copied!");
+    }
+
+    function logout() { localStorage.removeItem('ultimateUser'); location.reload(); }
+
+    function pay(item, price) {
+        const target = document.getElementById('targetAccount').value;
+        const user = JSON.parse(localStorage.getItem('ultimateUser'));
+        const referrer = localStorage.getItem('activeReferrer') || "DIRECT";
+        if (!target) return alert("Enter target details!");
+
+        FlutterwaveCheckout({
+            public_key: "FLWPUBK_TEST-3c05ac79962d03be3d13cf562a8b0d34-X",
+            tx_ref: "ULT-" + Date.now(),
+            amount: price,
+            currency: "NGN",
+            customer: { email: user.email, name: user.name },
+            callback: function (data) {
+                if (data.status === "successful") {
+                    user.history.push({ item, price });
+                    localStorage.setItem('ultimateUser', JSON.stringify(user));
+                    document.getElementById('success-msg').innerText = "Confirmed order for " + item;
+                    document.getElementById('success-overlay').style.display = 'flex';
+                    setTimeout(() => {
+                        const receipt = `✅ NEW ORDER\n\nItem: ${item}\nTarget: ${target}\nBuyer: ${user.name}\nReferrer: ${referrer}`;
+                        window.location.href = "https://wa.me/2349025893450?text=" + encodeURIComponent(receipt);
+                    }, 4000);
+                }
+            }
+        });
+    }
+</script>
+</body>
+    </html>
     
