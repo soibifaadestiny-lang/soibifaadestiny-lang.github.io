@@ -3,187 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ULTIMATE INTERNET 🚀 | Member Portal</title>
+    <title>ULTIMATE HUB | Member Portal</title>
     <script src="https://checkout.flutterwave.com/v3.js"></script>
     <style>
-        :root { --primary: #00d2ff; --dark: #0b0f19; --card: #1e293b; --success: #25d366; --accent: #ff9900; --glass: rgba(255, 255, 255, 0.03); }
+        :root { --primary: #00d2ff; --dark: #0b0f19; --card: #1e293b; --success: #25d366; --accent: #ff9900; --glass: rgba(255, 255, 255, 0.05); }
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: var(--dark); color: white; text-align: center; }
         
-        /* SIGN UP MODAL */
-        #auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark); z-index: 50000; display: flex; justify-content: center; align-items: center; padding: 20px; box-sizing: border-box; }
-        .auth-card { background: var(--card); padding: 40px; border-radius: 24px; border: 1px solid var(--primary); max-width: 400px; width: 100%; box-shadow: 0 0 30px rgba(0, 210, 255, 0.2); }
-        .auth-card input { width: 100%; padding: 15px; margin: 10px 0; border-radius: 10px; border: 1px solid #334155; background: #0b0f19; color: white; outline: none; box-sizing: border-box; }
+        /* SIGN UP WITH IMAGE UPLOAD */
+        #auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark); z-index: 50000; display: flex; justify-content: center; align-items: center; padding: 20px; }
+        .auth-card { background: var(--card); padding: 30px; border-radius: 24px; border: 1px solid var(--primary); max-width: 400px; width: 100%; box-shadow: 0 0 40px rgba(0, 210, 255, 0.15); }
+        
+        .upload-circle { position: relative; width: 110px; height: 110px; margin: 0 auto 15px; }
+        #profile-preview { width: 100%; height: 100%; border-radius: 50%; border: 3px solid var(--primary); object-fit: cover; background: #0b0f19; }
+        .file-label { display: block; font-size: 0.75rem; color: var(--primary); cursor: pointer; margin-bottom: 15px; font-weight: bold; }
+        #profile-input { display: none; }
+
+        .auth-card input { width: 100%; padding: 12px; margin: 8px 0; border-radius: 10px; border: 1px solid #334155; background: #0b0f19; color: white; box-sizing: border-box; outline: none; }
         .auth-btn { width: 100%; background: var(--primary); color: #0b0f19; padding: 15px; border-radius: 10px; font-weight: bold; border: none; cursor: pointer; margin-top: 10px; }
 
-        /* HEADER */
-        header { padding: 15px 20px; background: #161e2d; border-bottom: 1px solid #334155; position: sticky; top: 0; z-index: 1000; }
-        .header-content { display: flex; justify-content: space-between; align-items: center; max-width: 1200px; margin: auto; }
-        .logout-link { color: #ff4d4d; font-size: 0.75rem; cursor: pointer; text-decoration: underline; margin-left: 10px; }
+        /* DASHBOARD HEADER */
+        header { padding: 12px 20px; background: #161e2d; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
+        .user-profile { display: flex; align-items: center; gap: 10px; }
+        .nav-avatar { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover; }
+        .logout-btn { background: #ff4d4d33; color: #ff4d4d; padding: 5px 12px; border-radius: 6px; font-size: 0.7rem; cursor: pointer; border: 1px solid #ff4d4d; }
 
-        /* HERO & INFO */
-        .hero { padding: 60px 20px; background: radial-gradient(circle at top, #1e293b 0%, var(--dark) 70%); }
-        .info-bar { background: var(--glass); padding: 25px; margin: -40px auto 40px; max-width: 600px; border-radius: 20px; border: 1px solid #334155; backdrop-filter: blur(10px); }
-        .info-bar input { background: #0b0f19; border: 1px solid #334155; padding: 12px; border-radius: 8px; color: white; margin: 5px; width: 45%; outline: none; }
-        .info-bar .full-width { width: 93%; border-color: var(--accent); }
+        /* CONTENT */
+        .main-content { max-width: 1100px; margin: 0 auto; padding: 20px; }
+        .dash-card { background: var(--card); border-radius: 20px; padding: 25px; border: 1px solid #334155; margin-bottom: 25px; text-align: left; }
+        .target-input { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid var(--accent); background: #0b0f19; color: white; margin-bottom: 15px; box-sizing: border-box; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .item-row { background: var(--glass); padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .buy-btn { background: var(--primary); color: #0b0f19; padding: 8px 16px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; }
 
-        /* CARDS */
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
-        .card { background: var(--card); border-radius: 24px; padding: 30px; border: 1px solid #334155; text-align: left; }
-        .card h3 { color: var(--primary); margin-top: 0; }
-        .price-option { background: rgba(255,255,255,0.03); margin: 10px 0; padding: 15px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; }
-        .buy-btn { background: var(--primary); color: #0b0f19; padding: 10px 20px; border-radius: 8px; font-weight: bold; cursor: pointer; border: none; }
-
-        /* AFFILIATE SECTION */
-        .affiliate-section { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); margin: 40px auto; max-width: 1160px; border-radius: 24px; padding: 40px; border: 1px solid var(--accent); text-align: left; }
-        .affiliate-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 20px; }
-        .aff-box { background: rgba(255, 153, 0, 0.1); padding: 20px; border-radius: 15px; border: 1px solid rgba(255, 153, 0, 0.2); }
-        .aff-box h4 { margin: 0; color: var(--accent); }
-
-        #loader-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 15, 25, 0.95); z-index: 60000; flex-direction: column; justify-content: center; align-items: center; }
-        .chat-bubble { position: fixed; bottom: 25px; right: 25px; background: var(--success); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 30px; z-index: 9999; text-decoration: none; }
-        footer { margin-top: 50px; padding: 40px; border-top: 1px solid #334155; color: #64748b; font-size: 0.8rem; }
+        #success-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark); z-index: 100000; flex-direction: column; justify-content: center; align-items: center; }
+        #loader { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:99999; flex-direction:column; justify-content:center; align-items:center; }
     </style>
 </head>
 <body>
 
+<div id="loader">
+    <div style="width: 50px; height: 50px; border: 5px solid #334155; border-top: 5px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite;"></div>
+</div>
+
+<div id="success-overlay">
+    <h1 style="color: var(--success);">✓ Payment Successful</h1>
+    <p id="success-msg" style="color: #94a3b8;"></p>
+    <p style="color: var(--accent);">Opening WhatsApp for your delivery...</p>
+</div>
+
 <div id="auth-overlay">
     <div class="auth-card">
-        <h2 style="color: var(--primary); margin-top: 0;">Member Access</h2>
+        <h2 style="color: var(--primary); margin-bottom: 20px;">Create Account</h2>
+        
+        <div class="upload-circle">
+            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" id="profile-preview">
+        </div>
+        <label for="profile-input" class="file-label">Click to Upload Photo</label>
+        <input type="file" id="profile-input" accept="image/*" onchange="processFile(this)">
+
         <input type="text" id="regName" placeholder="Full Name">
         <input type="email" id="regEmail" placeholder="Email Address">
         <input type="password" id="regPass" placeholder="Password">
-        <button class="auth-btn" onclick="registerUser()">Enter Hub 🚀</button>
+        <button class="auth-btn" onclick="register()">Sign Up & Enter 🚀</button>
     </div>
-</div>
-
-<div id="loader-overlay">
-    <div style="width: 50px; height: 50px; border: 5px solid #334155; border-top: 5px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite;"></div>
-    <h2 style="color: var(--primary); margin-top: 20px;">Processing...</h2>
 </div>
 
 <header>
-    <div class="header-content">
-        <h3 style="color: var(--primary); margin: 0;">ULTIMATE HUB</h3>
-        <div>
-            <span id="userWelcome" style="font-size: 0.85rem; color: var(--accent);"></span>
-            <span class="logout-link" onclick="logout()">Logout</span>
-        </div>
+    <div style="font-weight: bold; color: var(--primary); letter-spacing: 1px;">ULTIMATE HUB</div>
+    <div class="user-profile">
+        <img id="headerAvatar" src="" class="nav-avatar" style="display:none;">
+        <span id="headerName" style="font-size: 0.85rem; color: var(--accent); font-weight: bold;"></span>
+        <button class="logout-btn" onclick="logout()">Logout</button>
     </div>
 </header>
 
-<div class="hero">
-    <h1>ULTIMATE INTERNET 🚀</h1>
-    <p>Premium Digital Assets & Connectivity Solutions.</p>
-</div>
-
-<div class="info-bar">
-    <h4>Account to Credit</h4>
-    <input type="text" id="custName" placeholder="Name" readonly>
-    <input type="email" id="custEmail" placeholder="Email" readonly>
-    <input type="text" id="targetAccount" class="full-width" placeholder="TikTok Username / Phone Number / Email for Delivery">
-</div>
-
-<div class="container">
-    <div class="card">
-        <h3>📈 Social Growth</h3>
-        <div class="price-option"><span>1k TikTok Followers</span> <strong>₦2,500</strong> <button class="buy-btn" onclick="processOrder('1k TikTok Followers', 2500)">Order</button></div>
-        <div class="price-option"><span>5k FB Page Likes</span> <strong>₦12,000</strong> <button class="buy-btn" onclick="processOrder('5k FB Likes', 12000)">Order</button></div>
-    </div>
-    
-    <div class="card">
-        <h3>📶 Data Bundles</h3>
-        <div class="price-option"><span>MTN 1GB</span> <strong>₦500</strong> <button class="buy-btn" onclick="processOrder('MTN 1GB Data', 500)">Order</button></div>
-        <div class="price-option"><span>MTN 5GB</span> <strong>₦2,500</strong> <button class="buy-btn" onclick="processOrder('MTN 5GB Data', 2500)">Order</button></div>
+<div class="main-content">
+    <div class="dash-card" style="border-color: var(--accent);">
+        <h3 style="margin-top: 0; color: var(--accent);">📈 Affiliate Center</h3>
+        <p style="font-size: 0.8rem; color: #94a3b8;">Referral Link: <span id="refLinkText" style="color: var(--primary);">Loading...</span></p>
+        <button class="buy-btn" style="background: var(--accent); width: 100%;" onclick="copyLink()">Copy My Link</button>
     </div>
 
-    <div class="card">
-        <h3>🛠️ Premium Accounts</h3>
-        <div class="price-option"><span>Aged TikTok Account</span> <strong>₦15,000</strong> <button class="buy-btn" onclick="processOrder('Aged TikTok Account', 15000)">Order</button></div>
-        <div class="price-option"><span>Verified FB Page</span> <strong>₦20,000</strong> <button class="buy-btn" onclick="processOrder('Verified FB Page', 20000)">Order</button></div>
-    </div>
-</div>
-
-<div class="affiliate-section">
-    <h2 style="color: var(--accent); margin-top: 0;">💰 Affiliate Program</h2>
-    <p>Earn passive income by referring customers to Ultimate Internet. Join our network of successful partners today!</p>
-    
-    <div class="affiliate-grid">
-        <div class="aff-box">
-            <h4>10% Commission</h4>
-            <p style="font-size: 0.8rem; margin-bottom: 0;">On every Data & Social Growth referral.</p>
-        </div>
-        <div class="aff-box">
-            <h4>₦2,000 Bonus</h4>
-            <p style="font-size: 0.8rem; margin-bottom: 0;">On every Premium Account sale.</p>
-        </div>
-        <div class="aff-box">
-            <h4>Instant Payout</h4>
-            <p style="font-size: 0.8rem; margin-bottom: 0;">Withdraw your earnings to any Nigerian bank.</p>
+    <div class="dash-card">
+        <h3>🛒 Market Services</h3>
+        <input type="text" id="targetAccount" class="target-input" placeholder="TikTok Username / Phone Number / Delivery Email">
+        
+        <div class="grid">
+            <div class="item-row"><span>MTN 5GB Data</span> <strong>₦2,500</strong> <button class="buy-btn" onclick="pay('MTN 5GB', 2500)">Order</button></div>
+            <div class="item-row"><span>1k TikTok Followers</span> <strong>₦2,500</strong> <button class="buy-btn" onclick="pay('1k TikTok Followers', 2500)">Order</button></div>
+            <div class="item-row"><span>Verified FB Page</span> <strong>₦20,000</strong> <button class="buy-btn" onclick="pay('Verified FB Page', 20000)">Order</button></div>
         </div>
     </div>
-    
-    <button class="buy-btn" style="margin-top: 30px; background: var(--accent);" onclick="joinAffiliate()">Apply to Join Affiliate 🚀</button>
 </div>
-
-<a href="https://wa.me/2349025893450" class="chat-bubble" target="_blank">💬</a>
-
-<footer>
-    <p>🛡️ Secure Member Portal | Merchant ID: 100750749</p>
-    <p>&copy; 2026 ULTIMATE INTERNET</p>
-</footer>
 
 <script>
+    let userAvatarData = "";
+
+    function processFile(input) {
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('profile-preview').src = e.target.result;
+                userAvatarData = e.target.result;
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+
+    function register() {
+        const name = document.getElementById('regName').value;
+        const email = document.getElementById('regEmail').value;
+        const affID = "ULT-" + Math.floor(1000 + Math.random() * 9000);
+        
+        if (name && email) {
+            const userObj = {
+                name: name,
+                email: email,
+                affID: affID,
+                avatar: userAvatarData || "https://cdn-icons-png.flaticon.com/512/149/149071.png"
+            };
+            localStorage.setItem('ultimateUser', JSON.stringify(userObj));
+            location.reload();
+        } else { alert("Please complete the form!"); }
+    }
+
     window.onload = function() {
-        const savedUser = localStorage.getItem('ultimateUser');
-        if (savedUser) {
-            const user = JSON.parse(savedUser);
+        const saved = JSON.parse(localStorage.getItem('ultimateUser'));
+        if (saved) {
             document.getElementById('auth-overlay').style.display = 'none';
-            document.getElementById('userWelcome').innerText = "Hi, " + user.name.split(' ')[0];
-            document.getElementById('custName').value = user.name;
-            document.getElementById('custEmail').value = user.email;
+            document.getElementById('headerName').innerText = saved.name.split(' ')[0];
+            document.getElementById('headerAvatar').src = saved.avatar;
+            document.getElementById('headerAvatar').style.display = 'block';
+            document.getElementById('refLinkText').innerText = window.location.origin + window.location.pathname + "?ref=" + saved.affID;
         }
     };
 
-    function registerUser() {
-        const name = document.getElementById('regName').value;
-        const email = document.getElementById('regEmail').value;
-        const pass = document.getElementById('regPass').value;
-        if (name.length < 3 || !email.includes('@') || pass.length < 4) {
-            alert("Please enter valid registration details.");
-            return;
-        }
-        localStorage.setItem('ultimateUser', JSON.stringify({ name, email }));
-        location.reload();
+    function logout() { localStorage.removeItem('ultimateUser'); location.reload(); }
+
+    function copyLink() {
+        navigator.clipboard.writeText(document.getElementById('refLinkText').innerText);
+        alert("Referral link copied!");
     }
 
-    function logout() {
-        localStorage.removeItem('ultimateUser');
-        location.reload();
-    }
-
-    function joinAffiliate() {
-        const user = JSON.parse(localStorage.getItem('ultimateUser'));
-        const msg = encodeURIComponent("Hello Admin, my name is " + user.name + " (" + user.email + "). I want to join the Ultimate Internet Affiliate Program and start earning commissions.");
-        window.location.href = "https://wa.me/2349025893450?text=" + msg;
-    }
-
-    function processOrder(item, price) {
+    function pay(item, price) {
         const target = document.getElementById('targetAccount').value;
-        const name = document.getElementById('custName').value;
-        const email = document.getElementById('custEmail').value;
-
-        if (!target) { alert("❌ Please provide the Target Account/Phone!"); return; }
+        const user = JSON.parse(localStorage.getItem('ultimateUser'));
+        if (!target) { alert("Please enter the target details!"); return; }
 
         FlutterwaveCheckout({
             public_key: "FLWPUBK_TEST-3c05ac79962d03be3d13cf562a8b0d34-X",
-            tx_ref: "ULT-" + Date.now(),
+            tx_ref: "PAY-" + Date.now(),
             amount: price,
             currency: "NGN",
-            customer: { email: email, name: name },
+            customer: { email: user.email, name: user.name },
             callback: function (data) {
                 if (data.status === "successful") {
-                    document.getElementById('loader-overlay').style.display = 'flex';
-                    window.location.href = "https://wa.me/2349025893450?text=" + encodeURIComponent("✅ PAID: " + item + "\nTarget: " + target + "\nRef: " + data.transaction_id);
+                    document.getElementById('success-overlay').style.display = 'flex';
+                    document.getElementById('success-msg').innerText = "Order for " + item + " confirmed.";
+                    
+                    setTimeout(() => {
+                        const hasPhoto = user.avatar.length > 100 ? "YES" : "NO";
+                        const finalMsg = "✅ NEW ORDER\nItem: " + item + "\nTarget: " + target + "\nBuyer: " + user.name + "\nProfile Photo: " + hasPhoto;
+                        window.location.href = "https://wa.me/2349025893450?text=" + encodeURIComponent(finalMsg);
+                    }, 3000);
                 }
             }
         });
@@ -192,4 +175,4 @@
 <style> @keyframes spin { 100% { transform: rotate(360deg); } } </style>
 </body>
     </html>
-        
+                                                                                  
