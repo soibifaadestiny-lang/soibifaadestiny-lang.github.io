@@ -3,11 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ULTIMATE INTERNET 🚀 | Digital Growth & Connectivity</title>
-    <script src="https://checkout.flutterwave.com/v3.js"></script>
+    <title>ULTIMATE INTERNET 🚀 | Master Admin Portal</title>
     <style>
         :root { --primary: #00d2ff; --dark: #0b0f19; --card: #1e293b; --success: #25d366; --accent: #ff9900; --glass: rgba(255, 255, 255, 0.03); }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background-color: var(--dark); color: white; text-align: center; line-height: 1.6; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background-color: var(--dark); color: white; text-align: center; line-height: 1.6; overflow-x: hidden; }
         
         /* HERO SECTION */
         .hero { padding: 80px 20px; background: radial-gradient(circle at top, #1e293b 0%, var(--dark) 70%); border-bottom: 1px solid #334155; }
@@ -19,166 +18,203 @@
         .info-bar { background: var(--glass); padding: 30px; margin: -50px auto 40px; max-width: 650px; border-radius: 20px; border: 1px solid #334155; backdrop-filter: blur(10px); position: relative; z-index: 10; }
         .info-bar input { background: #0b0f19; border: 1px solid #334155; padding: 14px; border-radius: 10px; color: white; margin: 8px 1%; width: 45%; outline: none; transition: 0.3s; }
         .info-bar .full-width { width: 93.5%; border-color: var(--accent); }
-        .info-bar input:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(0, 210, 255, 0.2); }
+
+        /* MODALS */
+        .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 30000; justify-content: center; align-items: center; padding: 20px; }
+        .modal-card { background: var(--card); padding: 30px; border-radius: 24px; border: 2px solid var(--primary); max-width: 400px; width: 100%; text-align: left; animation: slideUp 0.3s ease; }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        
+        /* ADMIN STYLES */
+        .admin-input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid var(--primary); background: #0b0f19; color: white; box-sizing: border-box; }
+        #admin-panel { display: none; padding: 40px 20px; background: #0b0f19; min-height: 100vh; position: fixed; inset: 0; z-index: 40000; overflow-y: auto; text-align: left; }
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: var(--card); border-radius: 10px; overflow: hidden; font-size: 0.8rem; }
+        th, td { padding: 12px; border-bottom: 1px solid #334155; text-align: left; }
+        th { background: #161e2d; color: var(--primary); }
+
+        /* BANK BOX */
+        .bank-box { background: #0b0f19; padding: 15px; border-radius: 12px; border: 1px dashed var(--primary); margin: 15px 0; position: relative; }
+        .bank-box b { color: var(--accent); font-size: 1.1rem; }
+        .copy-btn { background: var(--primary); color: #0b0f19; border: none; padding: 4px 10px; border-radius: 5px; font-size: 0.7rem; font-weight: bold; cursor: pointer; float: right; margin-top: -5px; }
 
         /* SERVICES GRID */
         .container { max-width: 1200px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
         .card { background: var(--card); border-radius: 24px; padding: 30px; border: 1px solid #334155; transition: 0.4s; text-align: left; position: relative; }
         .card:hover { transform: translateY(-10px); border-color: var(--primary); }
         
-        .price-option { background: rgba(255,255,255,0.03); margin: 12px 0; padding: 18px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; }
-        .buy-btn { background: var(--primary); color: #0b0f19; padding: 10px 22px; border-radius: 10px; font-weight: bold; cursor: pointer; border: none; }
-
-        /* REDIRECT LOADER */
-        #loader-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 15, 25, 0.95); z-index: 20000; flex-direction: column; justify-content: center; align-items: center; }
-        .spinner { width: 50px; height: 50px; border: 5px solid #334155; border-top: 5px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
-        /* SALE POPUP */
-        #sale-popup { position: fixed; bottom: 25px; left: 25px; background: white; color: black; padding: 12px 25px; border-radius: 50px; display: flex; align-items: center; gap: 12px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); z-index: 10000; transform: translateX(-150%); transition: 0.6s; font-weight: 600; font-size: 0.85rem; }
-        #sale-popup.show { transform: translateX(0); }
-
-        /* FAQ */
-        .faq-section { max-width: 800px; margin: 80px auto; padding: 0 20px; text-align: left; }
-        .faq-item { background: #161e2d; margin-bottom: 12px; border-radius: 15px; border: 1px solid #334155; }
-        .faq-question { padding: 20px; cursor: pointer; color: var(--primary); font-weight: 600; display: flex; justify-content: space-between; }
-        .faq-answer { padding: 0 20px 20px; color: #94a3b8; display: none; border-top: 1px solid #242f3f; padding-top: 15px; }
+        .price-option { background: rgba(255,255,255,0.03); margin: 12px 0; padding: 18px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+        .buy-btn { background: var(--primary); color: #0b0f19; padding: 10px 18px; border-radius: 10px; font-weight: bold; cursor: pointer; border: none; }
+        .pay-btn { background: var(--success); color: white; width: 100%; padding: 15px; margin-top: 10px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; }
 
         .chat-bubble { position: fixed; bottom: 25px; right: 25px; background: var(--success); color: white; width: 65px; height: 65px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 35px; z-index: 9999; text-decoration: none; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3); }
         footer { margin-top: 100px; padding: 60px 20px; background: #070a13; border-top: 1px solid #334155; }
-        .coming-soon { opacity: 0.5; filter: grayscale(1); }
-        .badge { position: absolute; top: 15px; right: 15px; background: var(--accent); color: black; padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<div id="loader-overlay">
-    <div class="spinner"></div>
-    <h2 style="color: var(--primary); margin-top: 20px;">Verifying Payment...</h2>
-    <p>Please wait while we redirect you to WhatsApp.</p>
+<div id="admin-panel">
+    <div style="max-width: 900px; margin: 0 auto;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+            <h1 style="color: var(--primary);">Ultimate Business Dashboard</h1>
+            <button onclick="logoutAdmin()" class="buy-btn" style="background: #ff4d4d; color: white;">Close Dashboard</button>
+        </div>
+
+        <div class="stat-grid">
+            <div class="card" style="border-color: var(--success);">
+                <small>TOTAL REVENUE</small>
+                <h2 id="totalRev" style="margin: 5px 0; color: var(--success);">₦0</h2>
+            </div>
+            <div class="card" style="border-color: var(--accent);">
+                <small>SUCCESSFUL CLICKS</small>
+                <h2 id="totalOrders" style="margin: 5px 0; color: var(--accent);">0</h2>
+            </div>
+        </div>
+
+        <h3>Recent Order Attempts</h3>
+        <div style="overflow-x: auto;">
+            <table id="orderTable">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Customer</th>
+                        <th>Service</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody id="orderBody">
+                    </tbody>
+            </table>
+        </div>
+        <button onclick="clearStats()" style="background: none; border: 1px solid #444; color: #444; margin-top: 20px; cursor: pointer; padding: 5px 10px; border-radius: 5px;">Reset All Data</button>
+    </div>
+</div>
+
+<div id="admin-login-modal" class="modal-overlay">
+    <div class="modal-card">
+        <h3 style="margin-top: 0; color: var(--primary);">Admin Security Gate</h3>
+        <input type="password" id="adminPass" class="admin-input" placeholder="Password">
+        <button class="pay-btn" onclick="checkAdmin()">Access Dashboard</button>
+        <button style="background: none; color: #64748b; border: none; width: 100%; margin-top: 10px; cursor: pointer;" onclick="closeAdminModal()">Close</button>
+    </div>
+</div>
+
+<div id="payment-modal" class="modal-overlay">
+    <div class="modal-card">
+        <h3 style="margin-top:0; color:var(--primary);">🏦 Transfer Instructions</h3>
+        <p style="font-size: 0.9rem; color:#94a3b8;">Pay <b id="pay-amount" style="color:white;"></b> for <b id="pay-item" style="color:white;"></b></p>
+        <div class="bank-box">
+            <button class="copy-btn" id="copyText" onclick="copyAcc()">Copy No.</button>
+            <small>Bank:</small> <b>UBA</b><br>
+            <small>Number:</small> <b id="accNo">2368463501</b><br>
+            <small>Name:</small> <b>Destiny Soibifaa Bornfirst</b>
+        </div>
+        <button class="pay-btn" onclick="confirmPayment()">✅ I HAVE PAID (SEND PROOF)</button>
+        <button style="background:none; color:#64748b; border:none; width:100%; margin-top:15px; cursor:pointer;" onclick="closeModal()">Cancel</button>
+    </div>
 </div>
 
 <div class="hero">
-    <span class="hero-badge">Fast. Secure. Affordable.</span>
+    <span class="hero-badge">Verified Social & Data Merchant</span>
     <h1>ULTIMATE INTERNET 🚀</h1>
-    <p>Your One-Stop Hub for Digital Growth & Connectivity. We specialize in providing high-quality digital assets and internet solutions to help individuals and businesses scale their online presence.</p>
+    <p>Premium Digital Growth & Connectivity Solutions.</p>
 </div>
 
 <div class="info-bar">
-    <h4>🛠️ Step 1: Delivery Information</h4>
+    <h4>🛠️ Delivery Details</h4>
     <input type="text" id="custName" placeholder="Your Full Name">
     <input type="email" id="custEmail" placeholder="Email Address">
-    <input type="text" id="targetAccount" class="full-width" placeholder="Target Account (Phone No / TikTok Username / Facebook Link)">
+    <input type="text" id="targetAccount" class="full-width" placeholder="Target Account (Phone / TikTok / FB Link)">
 </div>
-
-<h2 style="margin-top: 60px;">Our Services</h2>
 
 <div class="container">
     <div class="card">
         <h3>📈 Social Media Growth</h3>
-        <p style="font-size: 0.85rem; color: #94a3b8;">High-quality followers and engagement for TikTok and Facebook.</p>
-        <div class="price-option"><span>1k TikTok Followers</span> <strong>₦2,500</strong> <button class="buy-btn" onclick="processOrder('1k TikTok Followers', 2500)">Order</button></div>
-        <div class="price-option"><span>5k Facebook Likes</span> <strong>₦12,000</strong> <button class="buy-btn" onclick="processOrder('5k FB Likes', 12000)">Order</button></div>
+        <div class="price-option"><span>1k TikTok Followers</span> <strong>₦2,500</strong> <button class="buy-btn" onclick="openPayment('1k TikTok Followers', 2500)">Order</button></div>
+        <div class="price-option"><span>5k Facebook Likes</span> <strong>₦12,000</strong> <button class="buy-btn" onclick="openPayment('5k FB Likes', 12000)">Order</button></div>
     </div>
-
-    <div class="card">
-        <h3>🌐 Global Numbers</h3>
-        <p style="font-size: 0.85rem; color: #94a3b8;">Verified USA Virtual Numbers for WhatsApp, Telegram, and more.</p>
-        <div class="price-option"><span>USA Virtual No.</span> <strong>₦7,000</strong> <button class="buy-btn" onclick="processOrder('USA Virtual Number', 7000)">Order</button></div>
-    </div>
-
     <div class="card">
         <h3>📶 Data Bundles</h3>
-        <p style="font-size: 0.85rem; color: #94a3b8;">Affordable internet data for all major networks.</p>
-        <div class="price-option"><span>MTN 1GB (30 Days)</span> <strong>₦500</strong> <button class="buy-btn" onclick="processOrder('MTN 1GB Data', 500)">Order</button></div>
-        <div class="price-option"><span>MTN 5GB (30 Days)</span> <strong>₦2,500</strong> <button class="buy-btn" onclick="processOrder('MTN 5GB Data', 2500)">Order</button></div>
+        <div class="price-option"><span>MTN 1GB (30 Days)</span> <strong>₦500</strong> <button class="buy-btn" onclick="openPayment('MTN 1GB Data', 500)">Order</button></div>
+        <div class="price-option"><span>MTN 5GB (30 Days)</span> <strong>₦2,500</strong> <button class="buy-btn" onclick="openPayment('MTN 5GB Data', 2500)">Order</button></div>
     </div>
-
-    <div class="card coming-soon">
-        <span class="badge">LOCKED</span>
+    <div class="card">
         <h3>🛠️ Premium Accounts</h3>
-        <p style="font-size: 0.85rem; color: #64748b;">Aged and verified social media accounts for business use.</p>
-        <div class="price-option"><span>Aged TikTok Account</span> <strong>₦15,000</strong> <button class="buy-btn" disabled>Order</button></div>
-    </div>
-</div>
-
-<div class="faq-section">
-    <h2 style="text-align: center; color: var(--accent);">Frequently Asked Questions</h2>
-    <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(0)">How do I receive my order? <span>+</span></div>
-        <div class="faq-answer" id="faq-0">Once payment is confirmed, our system triggers delivery. For Data, it's instant. For Growth services, it begins within 15-30 minutes.</div>
-    </div>
-    <div class="faq-item">
-        <div class="faq-question" onclick="toggleFaq(1)">Is the payment portal secure? <span>+</span></div>
-        <div class="faq-answer" id="faq-1">Yes! We process all transactions via Flutterwave, ensuring your data is encrypted and 100% safe.</div>
+        <div class="price-option"><span>FB Account (10k Followers)</span> <strong>₦14,500</strong> <button class="buy-btn" onclick="openPayment('Aged FB (10k Followers)', 14500)">Order</button></div>
+        <div class="price-option"><span>FB Account (7k Followers)</span> <strong>₦10,000</strong> <button class="buy-btn" onclick="openPayment('Aged FB (7k Followers)', 10000)">Order</button></div>
     </div>
 </div>
 
 <a href="https://wa.me/2349025893450" class="chat-bubble" target="_blank">💬</a>
 
-<div id="sale-popup">
-    <span style="font-size: 20px;">🔥</span>
-    <span id="popup-text">New Order: 1k TikTok Followers</span>
-</div>
-
 <footer>
-    <span style="color: var(--success); font-weight: bold; display: block; margin-bottom: 10px;">🛡️ Payments Secured by Flutterwave</span>
-    <h3>📞 Contact Us</h3>
-    <p>For orders and inquiries, contact us via WhatsApp: <strong>2349025893450</strong></p>
-    <p style="color: var(--primary); font-weight: bold; margin-top: 30px;">Managed by Ultimate Internet - Fast. Secure. Affordable.</p>
-    <p style="font-size: 0.7rem; margin-top: 40px; color: #334155;">Merchant ID: 100750749 | &copy; 2026 ULTIMATE INTERNET</p>
+    <p>WhatsApp: <strong>2349025893450</strong></p>
+    <p style="font-size: 0.7rem; color: #334155;">&copy; 2026 ULTIMATE INTERNET | <a href="javascript:void(0)" onclick="openAdminModal()" style="color: inherit; text-decoration: none;">Staff Login</a></p>
 </footer>
 
 <script>
-    const sales = ["Someone just bought 5GB Data", "New Order: 1k TikTok Followers", "USA Number just purchased", "New Order: 5k Facebook Likes", "Customer bought 1GB Data"];
-    function showPopup() {
-        const popup = document.getElementById('sale-popup');
-        const text = document.getElementById('popup-text');
-        if(popup && text) {
-            text.innerText = sales[Math.floor(Math.random() * sales.length)];
-            popup.classList.add('show');
-            setTimeout(() => popup.classList.remove('show'), 4500);
-        }
-    }
-    setInterval(showPopup, 15000);
+    let currentItem = "";
+    let currentPrice = 0;
 
-    function toggleFaq(id) {
-        const el = document.getElementById('faq-' + id);
-        el.style.display = (el.style.display === 'block') ? 'none' : 'block';
+    // --- ADMIN SYSTEM ---
+    function checkAdmin() {
+        if(document.getElementById('adminPass').value === "Admin@Ultimate2026") {
+            closeAdminModal();
+            loadAdminStats();
+            document.getElementById('admin-panel').style.display = 'block';
+        } else { alert("❌ Wrong Password"); }
     }
 
-    function processOrder(item, price) {
-        const name = document.getElementById('custName').value;
-        const email = document.getElementById('custEmail').value;
-        const target = document.getElementById('targetAccount').value;
-        if (!name || !email || !target) { alert("❌ Please fill in your Delivery Details first!"); return; }
+    function loadAdminStats() {
+        const stats = JSON.parse(localStorage.getItem('ultimateStats')) || { rev: 0, count: 0, orders: [] };
+        document.getElementById('totalRev').innerText = "₦" + stats.rev.toLocaleString();
+        document.getElementById('totalOrders').innerText = stats.count;
         
-        FlutterwaveCheckout({
-            public_key: "FLWPUBK_TEST-3c05ac79962d03be3d13cf562a8b0d34-X",
-            tx_ref: "ULT-" + Date.now(),
-            amount: price,
-            currency: "NGN",
-            payment_options: "card, banktransfer, ussd",
-            customer: { email: email, name: name },
-            customizations: { title: "Ultimate Internet", description: item + " for " + target },
-            callback: function (data) {
-                if (data.status === "successful" || data.charge_response_code === "00") {
-                    // Show Loader
-                    document.getElementById('loader-overlay').style.display = 'flex';
-                    
-                    const msg = "✅ PAYMENT CONFIRMED\n\nOrder: " + item + "\nTarget: " + target + "\nAmount: ₦" + price + "\nRef: " + data.transaction_id;
-                    const waUrl = "https://wa.me/2349025893450?text=" + encodeURIComponent(msg);
-                    
-                    // Immediate redirect
-                    window.location.href = waUrl;
-
-                    // Backup redirect
-                    setTimeout(() => { window.location.href = waUrl; }, 1500);
-                }
-            }
+        let html = "";
+        stats.orders.reverse().forEach(o => {
+            html += `<tr><td>${o.date}</td><td>${o.name}</td><td>${o.item}</td><td>₦${o.price}</td></tr>`;
         });
+        document.getElementById('orderBody').innerHTML = html;
+    }
+
+    function recordOrder(name, item, price) {
+        let stats = JSON.parse(localStorage.getItem('ultimateStats')) || { rev: 0, count: 0, orders: [] };
+        stats.rev += price;
+        stats.count += 1;
+        stats.orders.push({ date: new Date().toLocaleDateString(), name: name, item: item, price: price.toLocaleString() });
+        localStorage.setItem('ultimateStats', JSON.stringify(stats));
+    }
+
+    function clearStats() { if(confirm("Clear all business logs?")) { localStorage.removeItem('ultimateStats'); loadAdminStats(); } }
+    function openAdminModal() { document.getElementById('admin-login-modal').style.display = 'flex'; }
+    function closeAdminModal() { document.getElementById('admin-login-modal').style.display = 'none'; }
+    function logoutAdmin() { document.getElementById('admin-panel').style.display = 'none'; }
+
+    // --- SHOP SYSTEM ---
+    function openPayment(item, price) {
+        if (!document.getElementById('custName').value || !document.getElementById('targetAccount').value) {
+            return alert("❌ Enter Name and Target first!");
+        }
+        currentItem = item; currentPrice = price;
+        document.getElementById('pay-amount').innerText = "₦" + price.toLocaleString();
+        document.getElementById('pay-item').innerText = item;
+        document.getElementById('payment-modal').style.display = 'flex';
+    }
+
+    function closeModal() { document.getElementById('payment-modal').style.display = 'none'; }
+    function copyAcc() {
+        navigator.clipboard.writeText("2368463501");
+        document.getElementById('copyText').innerText = "Copied!";
+        setTimeout(() => { document.getElementById('copyText').innerText = "Copy No."; }, 2000);
+    }
+
+    function confirmPayment() {
+        const name = document.getElementById('custName').value;
+        const target = document.getElementById('targetAccount').value;
+        recordOrder(name, currentItem, currentPrice);
+        const msg = `🚀 *NEW ORDER*\n*Service:* ${currentItem}\n*Amount:* ₦${currentPrice.toLocaleString()}\n*Target:* ${target}\n*Customer:* ${name}\n✅ _I have transferred the money._`;
+        window.location.href = "https://wa.me/2349025893450?text=" + encodeURIComponent(msg);
     }
 </script>
 </body>
-        </html>
+                </html>
     
