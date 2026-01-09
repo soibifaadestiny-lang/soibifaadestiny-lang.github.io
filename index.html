@@ -3,240 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ULTIMATE HUB | Master Business Portal</title>
+    <title>ULTIMATE INTERNET 🚀 | Digital Growth & Connectivity</title>
     <script src="https://checkout.flutterwave.com/v3.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        :root { --primary: #00d2ff; --dark: #0b0f19; --card: #1e293b; --success: #25d366; --accent: #ff9900; --glass: rgba(255, 255, 255, 0.05); }
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: var(--dark); color: white; text-align: center; overflow-x: hidden; }
+        :root { --primary: #00d2ff; --dark: #0b0f19; --card: #1e293b; --success: #25d366; --accent: #ff9900; --glass: rgba(255, 255, 255, 0.03); }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; background-color: var(--dark); color: white; text-align: center; line-height: 1.6; }
         
-        /* AUTH OVERLAY & BACKGROUND */
-        #auth-overlay { position: fixed; inset: 0; background: linear-gradient(rgba(11,15,25,0.85), rgba(11,15,25,0.85)), url('https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&w=1350&q=80'); background-size: cover; z-index: 50000; display: flex; justify-content: center; align-items: center; padding: 20px; }
-        .auth-card { background: rgba(30,41,59,0.95); padding: 30px; border-radius: 24px; border: 2px solid var(--primary); max-width: 400px; width: 100%; backdrop-filter: blur(10px); box-shadow: 0 0 40px rgba(0, 210, 255, 0.3); }
-        
-        /* NAVIGATION */
-        header { padding: 12px 20px; background: #161e2d; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; }
-        .nav-avatar { width: 38px; height: 38px; border-radius: 50%; border: 2px solid var(--accent); object-fit: cover; }
-        
-        /* CONTENT CARDS */
-        .main-content { max-width: 1100px; margin: 0 auto; padding: 20px; }
-        .dash-card { background: var(--card); border-radius: 20px; padding: 25px; border: 1px solid #334155; margin-bottom: 25px; text-align: left; position: relative; }
-        .target-input { width: 100%; padding: 15px; border-radius: 12px; border: 1px solid var(--accent); background: #0b0f19; color: white; margin-bottom: 15px; box-sizing: border-box; outline: none; }
-        
-        /* BUTTONS */
-        .buy-btn { background: var(--primary); color: #0b0f19; padding: 12px 20px; border-radius: 8px; font-weight: bold; border: none; cursor: pointer; transition: 0.3s; }
-        .buy-btn:active { transform: scale(0.95); }
-        .withdraw-btn { background: #ff4d4d; color: white; margin-top: 15px; width: 100%; }
+        /* HERO SECTION */
+        .hero { padding: 80px 20px; background: radial-gradient(circle at top, #1e293b 0%, var(--dark) 70%); border-bottom: 1px solid #334155; }
+        .hero h1 { font-size: 2.8rem; color: var(--primary); margin: 0; letter-spacing: -1px; text-transform: uppercase; }
+        .hero p { font-size: 1.2rem; color: #94a3b8; max-width: 700px; margin: 20px auto; }
+        .hero-badge { background: rgba(0, 210, 255, 0.1); color: var(--primary); padding: 5px 15px; border-radius: 50px; font-size: 0.9rem; font-weight: bold; }
 
-        /* FLOATING HELP BUTTON */
-        .help-fab { position: fixed; bottom: 20px; right: 20px; background: var(--success); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.4); cursor: pointer; z-index: 9999; font-size: 24px; text-decoration: none; border: 2px solid white; transition: 0.3s; }
-        .help-fab:hover { transform: scale(1.1); }
+        /* INPUT SECTION */
+        .info-bar { background: var(--glass); padding: 30px; margin: -50px auto 40px; max-width: 650px; border-radius: 20px; border: 1px solid #334155; backdrop-filter: blur(10px); position: relative; z-index: 10; }
+        .info-bar input { background: #0b0f19; border: 1px solid #334155; padding: 14px; border-radius: 10px; color: white; margin: 8px 1%; width: 45%; outline: none; transition: 0.3s; }
+        .info-bar .full-width { width: 93.5%; border-color: var(--accent); }
+        .info-bar input:focus { border-color: var(--primary); box-shadow: 0 0 10px rgba(0, 210, 255, 0.2); }
 
-        /* SUCCESS & RECEIPT UI */
-        #success-overlay { display: none; position: fixed; inset: 0; background: var(--dark); z-index: 100000; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
-        #receipt-card { background: white; color: #333; padding: 30px; border-radius: 15px; width: 100%; max-width: 320px; text-align: left; margin-bottom: 20px; }
-        .receipt-row { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.85rem; border-bottom: 1px solid #eee; padding-bottom: 4px; }
-
-        /* ADMIN MODAL */
-        #admin-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 999999; flex-direction: column; justify-content: center; align-items: center; padding: 20px; }
+        /* SERVICES GRID */
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; }
+        .card { background: var(--card); border-radius: 24px; padding: 30px; border: 1px solid #334155; transition: 0.4s; text-align: left; position: relative; }
+        .card:hover { transform: translateY(-10px); border-color: var(--primary); }
         
-        #loader { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.8); z-index:99999; justify-content:center; align-items:center; }
-        @keyframes spin { 100% { transform: rotate(360deg); } }
+        .price-option { background: rgba(255,255,255,0.03); margin: 12px 0; padding: 18px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .buy-btn { background: var(--primary); color: #0b0f19; padding: 10px 22px; border-radius: 10px; font-weight: bold; cursor: pointer; border: none; }
+
+        /* REDIRECT LOADER */
+        #loader-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(11, 15, 25, 0.95); z-index: 20000; flex-direction: column; justify-content: center; align-items: center; }
+        .spinner { width: 50px; height: 50px; border: 5px solid #334155; border-top: 5px solid var(--primary); border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* SALE POPUP */
+        #sale-popup { position: fixed; bottom: 25px; left: 25px; background: white; color: black; padding: 12px 25px; border-radius: 50px; display: flex; align-items: center; gap: 12px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); z-index: 10000; transform: translateX(-150%); transition: 0.6s; font-weight: 600; font-size: 0.85rem; }
+        #sale-popup.show { transform: translateX(0); }
+
+        /* FAQ */
+        .faq-section { max-width: 800px; margin: 80px auto; padding: 0 20px; text-align: left; }
+        .faq-item { background: #161e2d; margin-bottom: 12px; border-radius: 15px; border: 1px solid #334155; }
+        .faq-question { padding: 20px; cursor: pointer; color: var(--primary); font-weight: 600; display: flex; justify-content: space-between; }
+        .faq-answer { padding: 0 20px 20px; color: #94a3b8; display: none; border-top: 1px solid #242f3f; padding-top: 15px; }
+
+        .chat-bubble { position: fixed; bottom: 25px; right: 25px; background: var(--success); color: white; width: 65px; height: 65px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 35px; z-index: 9999; text-decoration: none; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.3); }
+        footer { margin-top: 100px; padding: 60px 20px; background: #070a13; border-top: 1px solid #334155; }
+        .coming-soon { opacity: 0.5; filter: grayscale(1); }
+        .badge { position: absolute; top: 15px; right: 15px; background: var(--accent); color: black; padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<div id="loader"><div style="width:50px; height:50px; border:5px solid #334155; border-top:5px solid var(--primary); border-radius:50%; animation:spin 1s linear infinite;"></div></div>
+<div id="loader-overlay">
+    <div class="spinner"></div>
+    <h2 style="color: var(--primary); margin-top: 20px;">Verifying Payment...</h2>
+    <p>Please wait while we redirect you to WhatsApp.</p>
+</div>
 
-<a href="https://wa.me/2349025893450?text=Hello, I need help with my Ultimate Hub account." class="help-fab" title="Live Support">🆘</a>
+<div class="hero">
+    <span class="hero-badge">Fast. Secure. Affordable.</span>
+    <h1>ULTIMATE INTERNET 🚀</h1>
+    <p>Your One-Stop Hub for Digital Growth & Connectivity. We specialize in providing high-quality digital assets and internet solutions to help individuals and businesses scale their online presence.</p>
+</div>
 
-<div id="admin-modal">
-    <div class="dash-card" style="width:100%; max-width:400px; text-align:center;">
-        <h2 style="color:var(--accent); margin-bottom:5px;">ADMIN PANEL</h2>
-        <p style="font-size:12px; color:#94a3b8; margin-bottom:20px;">Private Revenue Tracker</p>
-        <div style="margin:20px 0;">
-            <p style="margin:0; font-size:14px;">TOTAL REVENUE</p>
-            <div id="stat-revenue" style="font-size:2.5rem; color:var(--success); font-weight:bold;">₦0</div>
-            <p style="margin:15px 0 0 0; font-size:14px;">TOTAL SALES</p>
-            <div id="stat-count" style="font-size:2.5rem; color:var(--primary); font-weight:bold;">0</div>
-        </div>
-        <button class="buy-btn" style="width:100%;" onclick="document.getElementById('admin-modal').style.display='none'">Exit Admin View</button>
-        <button class="buy-btn" style="background:#ff4d4d; color:white; margin-top:10px; width:100%; font-size:12px;" onclick="if(confirm('Wipe all profit data?')){localStorage.removeItem('adminStats'); location.reload();}">Reset Stats</button>
+<div class="info-bar">
+    <h4>🛠️ Step 1: Delivery Information</h4>
+    <input type="text" id="custName" placeholder="Your Full Name">
+    <input type="email" id="custEmail" placeholder="Email Address">
+    <input type="text" id="targetAccount" class="full-width" placeholder="Target Account (Phone No / TikTok Username / Facebook Link)">
+</div>
+
+<h2 style="margin-top: 60px;">Our Services</h2>
+
+<div class="container">
+    <div class="card">
+        <h3>📈 Social Media Growth</h3>
+        <p style="font-size: 0.85rem; color: #94a3b8;">High-quality followers and engagement for TikTok and Facebook.</p>
+        <div class="price-option"><span>1k TikTok Followers</span> <strong>₦2,500</strong> <button class="buy-btn" onclick="processOrder('1k TikTok Followers', 2500)">Order</button></div>
+        <div class="price-option"><span>5k Facebook Likes</span> <strong>₦12,000</strong> <button class="buy-btn" onclick="processOrder('5k FB Likes', 12000)">Order</button></div>
+    </div>
+
+    <div class="card">
+        <h3>🌐 Global Numbers</h3>
+        <p style="font-size: 0.85rem; color: #94a3b8;">Verified USA Virtual Numbers for WhatsApp, Telegram, and more.</p>
+        <div class="price-option"><span>USA Virtual No.</span> <strong>₦7,000</strong> <button class="buy-btn" onclick="processOrder('USA Virtual Number', 7000)">Order</button></div>
+    </div>
+
+    <div class="card">
+        <h3>📶 Data Bundles</h3>
+        <p style="font-size: 0.85rem; color: #94a3b8;">Affordable internet data for all major networks.</p>
+        <div class="price-option"><span>MTN 1GB (30 Days)</span> <strong>₦500</strong> <button class="buy-btn" onclick="processOrder('MTN 1GB Data', 500)">Order</button></div>
+        <div class="price-option"><span>MTN 5GB (30 Days)</span> <strong>₦2,500</strong> <button class="buy-btn" onclick="processOrder('MTN 5GB Data', 2500)">Order</button></div>
+    </div>
+
+    <div class="card coming-soon">
+        <span class="badge">LOCKED</span>
+        <h3>🛠️ Premium Accounts</h3>
+        <p style="font-size: 0.85rem; color: #64748b;">Aged and verified social media accounts for business use.</p>
+        <div class="price-option"><span>Aged TikTok Account</span> <strong>₦15,000</strong> <button class="buy-btn" disabled>Order</button></div>
     </div>
 </div>
 
-<div id="success-overlay">
-    <div id="receipt-card">
-        <div style="text-align:center; border-bottom:2px solid #333; margin-bottom:15px; padding-bottom:10px;">
-            <h2 style="margin:0; font-size:1.2rem;">ULTIMATE HUB</h2>
-            <small>VERIFIED TRANSACTION</small>
-        </div>
-        <div class="receipt-row"><span>Purchased:</span> <b id="r-item"></b></div>
-        <div class="receipt-row"><span>Target:</span> <b id="r-target"></b></div>
-        <div class="receipt-row"><span>Price:</span> <b id="r-price"></b></div>
-        <div class="receipt-row"><span>Ref Code:</span> <b id="r-ref"></b></div>
-        <div class="receipt-row"><span>Date:</span> <b id="r-date"></b></div>
-        <div style="text-align:center; margin-top:20px; color:green; font-weight:bold; letter-spacing:1px;">SUCCESSFUL ✓</div>
+<div class="faq-section">
+    <h2 style="text-align: center; color: var(--accent);">Frequently Asked Questions</h2>
+    <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(0)">How do I receive my order? <span>+</span></div>
+        <div class="faq-answer" id="faq-0">Once payment is confirmed, our system triggers delivery. For Data, it's instant. For Growth services, it begins within 15-30 minutes.</div>
     </div>
-    <button class="buy-btn" style="background:var(--accent); width:320px; margin-bottom:10px;" onclick="downloadReceipt()">📥 DOWNLOAD RECEIPT PHOTO</button>
-    <button class="buy-btn" style="background:var(--success); color:white; width:320px;" id="wa-btn">💬 SEND TO WHATSAPP</button>
-</div>
-
-<div id="auth-overlay">
-    <div class="auth-card">
-        <h2 style="color: var(--primary); margin:0;">Ultimate Hub</h2>
-        <p style="font-size:12px; color:#94a3b8; margin-bottom:20px;">Join the Cyber Marketplace</p>
-        <div style="margin-bottom: 15px;">
-            <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" id="p-prev" style="width:90px;height:90px;border-radius:50%;border:3px solid var(--primary);object-fit:cover; background:#000;">
-            <label style="display:block;font-size:12px;color:var(--primary);cursor:pointer;margin-top:10px; font-weight:bold;"><u>Upload Profile Picture</u><input type="file" id="p-in" hidden onchange="pView(this)"></label>
-        </div>
-        <input type="text" id="r-name" placeholder="Full Name">
-        <input type="email" id="r-email" placeholder="Email Address">
-        <button class="buy-btn" style="width:100%; margin-top:10px;" onclick="register()">Create My Dashboard 🚀</button>
+    <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(1)">Is the payment portal secure? <span>+</span></div>
+        <div class="faq-answer" id="faq-1">Yes! We process all transactions via Flutterwave, ensuring your data is encrypted and 100% safe.</div>
     </div>
 </div>
 
-<header>
-    <div id="admin-trigger" style="font-weight: bold; color: var(--primary); cursor:pointer; font-size:1.1rem; letter-spacing:1px;">ULTIMATE HUB</div>
-    <div style="display:flex; align-items:center; gap:12px;">
-        <img id="h-av" src="" class="nav-avatar" style="display:none;">
-        <span id="h-name" style="font-size:14px; font-weight:bold; color:var(--accent);"></span>
-        <button onclick="logout()" style="background:none; border:1px solid #ff4d4d; color:#ff4d4d; padding:4px 10px; border-radius:6px; font-size:10px; font-weight:bold; cursor:pointer;">Exit</button>
-    </div>
-</header>
+<a href="https://wa.me/2349025893450" class="chat-bubble" target="_blank">💬</a>
 
-<div class="main-content">
-    <div class="dash-card" style="border-color: var(--accent);">
-        <h3 style="color: var(--accent); margin-top:0;">💰 Affiliate Dashboard</h3>
-        <p style="font-size:12px; color:#94a3b8; margin-bottom:8px;">Your Link (Earn 10% on every referral):</p>
-        <div id="ref-link" style="background: #0b0f19; padding: 12px; border-radius: 10px; font-size: 11px; color: var(--primary); border: 1px dashed #334155; word-break: break-all;">...</div>
-        <button class="buy-btn" style="background:var(--accent); width:100%; color:black; margin-top:12px;" onclick="copyL()">📋 COPY REFERRAL LINK</button>
-        
-        <div style="margin-top:25px; padding-top:20px; border-top:1px solid #334155;">
-            <h4 style="margin:0 0 10px 0;">Request Withdrawal</h4>
-            <input type="text" id="bank-info" class="target-input" placeholder="Bank Name, Account Number & Amount">
-            <button class="buy-btn withdraw-btn" onclick="withdraw()">💸 SEND WITHDRAWAL REQUEST</button>
-        </div>
-    </div>
-
-    <div class="dash-card">
-        <h3>🛒 Marketplace</h3>
-        <input type="text" id="target" class="target-input" placeholder="Enter Target (Phone No / Username)">
-        
-        <div style="background:var(--glass); padding:15px; border-radius:15px; display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; border:1px solid rgba(255,255,255,0.1);">
-            <div><b style="display:block;">MTN 1GB Data</b><small style="color:#94a3b8;">Instant Delivery</small></div>
-            <div style="display:flex; align-items:center; gap:15px;"><b>₦500</b><button class="buy-btn" style="padding:8px 15px;" onclick="startPay('MTN 1GB', 500)">Buy</button></div>
-        </div>
-        
-        <div style="background:var(--glass); padding:15px; border-radius:15px; display:flex; justify-content:space-between; align-items:center; border:1px solid rgba(255,255,255,0.1);">
-            <div><b style="display:block;">1k TikTok Followers</b><small style="color:#94a3b8;">High Quality Fans</small></div>
-            <div style="display:flex; align-items:center; gap:15px;"><b>₦2,500</b><button class="buy-btn" style="padding:8px 15px;" onclick="startPay('1k TikTok Followers', 2500)">Buy</button></div>
-        </div>
-    </div>
+<div id="sale-popup">
+    <span style="font-size: 20px;">🔥</span>
+    <span id="popup-text">New Order: 1k TikTok Followers</span>
 </div>
+
+<footer>
+    <span style="color: var(--success); font-weight: bold; display: block; margin-bottom: 10px;">🛡️ Payments Secured by Flutterwave</span>
+    <h3>📞 Contact Us</h3>
+    <p>For orders and inquiries, contact us via WhatsApp: <strong>2349025893450</strong></p>
+    <p style="color: var(--primary); font-weight: bold; margin-top: 30px;">Managed by Ultimate Internet - Fast. Secure. Affordable.</p>
+    <p style="font-size: 0.7rem; margin-top: 40px; color: #334155;">Merchant ID: 100750749 | &copy; 2026 ULTIMATE INTERNET</p>
+</footer>
 
 <script>
-    let profilePic = "";
-    let clicks = 0;
-    const params = new URLSearchParams(window.location.search);
-    if(params.get('ref')) localStorage.setItem('referralSrc', params.get('ref'));
-
-    // Admin Tracker (5-Click Secret)
-    document.getElementById('admin-trigger').addEventListener('click', () => {
-        clicks++;
-        if(clicks >= 5) {
-            const stats = JSON.parse(localStorage.getItem('adminStats')) || {rev:0, count:0};
-            document.getElementById('stat-revenue').innerText = "₦" + stats.rev;
-            document.getElementById('stat-count').innerText = stats.count;
-            document.getElementById('admin-modal').style.display = 'flex';
-            clicks = 0;
-        }
-        setTimeout(() => { if(clicks > 0) clicks = 0; }, 3000); // Reset clicks after 3 seconds of inactivity
-    });
-
-    function pView(i){
-        if(i.files && i.files[0]){
-            const r = new FileReader();
-            r.onload=(e)=>{ document.getElementById('p-prev').src=e.target.result; profilePic=e.target.result; };
-            r.readAsDataURL(i.files[0]);
+    const sales = ["Someone just bought 5GB Data", "New Order: 1k TikTok Followers", "USA Number just purchased", "New Order: 5k Facebook Likes", "Customer bought 1GB Data"];
+    function showPopup() {
+        const popup = document.getElementById('sale-popup');
+        const text = document.getElementById('popup-text');
+        if(popup && text) {
+            text.innerText = sales[Math.floor(Math.random() * sales.length)];
+            popup.classList.add('show');
+            setTimeout(() => popup.classList.remove('show'), 4500);
         }
     }
+    setInterval(showPopup, 15000);
 
-    function register(){
-        const n=document.getElementById('r-name').value, e=document.getElementById('r-email').value;
-        if(n && e){
-            localStorage.setItem('uHub', JSON.stringify({n, e, id: "ULT-"+Math.floor(1000+Math.random()*9000), av: profilePic}));
-            location.reload();
-        } else { alert("Please enter your name and email."); }
+    function toggleFaq(id) {
+        const el = document.getElementById('faq-' + id);
+        el.style.display = (el.style.display === 'block') ? 'none' : 'block';
     }
 
-    window.onload=()=>{
-        const u = JSON.parse(localStorage.getItem('uHub'));
-        if(u){
-            document.getElementById('auth-overlay').style.display='none';
-            document.getElementById('h-name').innerText = u.n.split(' ')[0];
-            document.getElementById('h-av').src = u.av || "https://cdn-icons-png.flaticon.com/512/149/149071.png";
-            document.getElementById('h-av').style.display = 'block';
-            document.getElementById('ref-link').innerText = window.location.origin + window.location.pathname + "?ref=" + u.id;
-        }
-    };
-
-    function startPay(item, price) {
-        const targetVal = document.getElementById('target').value;
-        const user = JSON.parse(localStorage.getItem('uHub'));
-        const refSource = localStorage.getItem('referralSrc') || "DIRECT";
-        if (!targetVal) return alert("Please enter target (Phone/Username)!");
-
-        document.getElementById('loader').style.display = 'flex';
-
+    function processOrder(item, price) {
+        const name = document.getElementById('custName').value;
+        const email = document.getElementById('custEmail').value;
+        const target = document.getElementById('targetAccount').value;
+        if (!name || !email || !target) { alert("❌ Please fill in your Delivery Details first!"); return; }
+        
         FlutterwaveCheckout({
             public_key: "FLWPUBK_TEST-3c05ac79962d03be3d13cf562a8b0d34-X",
-            tx_ref: "ULT-" + Date.now(), amount: price, currency: "NGN",
-            customer: { email: user.email, name: user.name },
+            tx_ref: "ULT-" + Date.now(),
+            amount: price,
+            currency: "NGN",
+            payment_options: "card, banktransfer, ussd",
+            customer: { email: email, name: name },
+            customizations: { title: "Ultimate Internet", description: item + " for " + target },
             callback: function (data) {
-                if (data.status === "successful") {
-                    // Update Profit Tracker
-                    let stats = JSON.parse(localStorage.getItem('adminStats')) || {rev:0, count:0};
-                    stats.rev += price; stats.count += 1;
-                    localStorage.setItem('adminStats', JSON.stringify(stats));
+                if (data.status === "successful" || data.charge_response_code === "00") {
+                    // Show Loader
+                    document.getElementById('loader-overlay').style.display = 'flex';
+                    
+                    const msg = "✅ PAYMENT CONFIRMED\n\nOrder: " + item + "\nTarget: " + target + "\nAmount: ₦" + price + "\nRef: " + data.transaction_id;
+                    const waUrl = "https://wa.me/2349025893450?text=" + encodeURIComponent(msg);
+                    
+                    // Immediate redirect
+                    window.location.href = waUrl;
 
-                    // Receipt Info
-                    document.getElementById('r-item').innerText = item;
-                    document.getElementById('r-target').innerText = targetVal;
-                    document.getElementById('r-price').innerText = "₦" + price;
-                    document.getElementById('r-ref').innerText = user.id;
-                    document.getElementById('r-date').innerText = new Date().toLocaleString();
-                    
-                    document.getElementById('loader').style.display = 'none';
-                    document.getElementById('success-overlay').style.display = 'flex';
-                    
-                    const waLink = "https://wa.me/2349025893450?text=" + encodeURIComponent(`✅ *NEW ORDER PLACED*\n\n*Service:* ${item}\n*Target:* ${targetVal}\n*Amount:* ₦${price}\n*User:* ${user.name}\n*User ID:* ${user.id}\n*Referrer:* ${refSource}\n*TransID:* ${data.transaction_id}`);
-                    
-                    document.getElementById('wa-btn').onclick = () => { window.location.assign(waLink); };
-                    setTimeout(() => { window.location.assign(waLink); }, 5000);
+                    // Backup redirect
+                    setTimeout(() => { window.location.href = waUrl; }, 1500);
                 }
-            },
-            onclose: function() { document.getElementById('loader').style.display = 'none'; }
+            }
         });
     }
-
-    function withdraw() {
-        const info = document.getElementById('bank-info').value;
-        const user = JSON.parse(localStorage.getItem('uHub'));
-        if(!info) return alert("Please enter your bank info and the amount!");
-        window.location.assign("https://wa.me/2349025893450?text=" + encodeURIComponent(`💸 *WITHDRAWAL REQUEST*\n\n*Name:* ${user.name}\n*ID:* ${user.id}\n*Request:* ${info}`));
-    }
-
-    function downloadReceipt() {
-        html2canvas(document.querySelector("#receipt-card")).then(canvas => {
-            let link = document.createElement('a'); link.download = 'UltimateHub_Receipt.png';
-            link.href = canvas.toDataURL(); link.click();
-        });
-    }
-
-    function copyL(){ navigator.clipboard.writeText(document.getElementById('ref-link').innerText); alert("Referral Link Copied!"); }
-    function logout(){ localStorage.removeItem('uHub'); location.reload(); }
 </script>
 </body>
-            </html>
-            
+        </html>
+    
